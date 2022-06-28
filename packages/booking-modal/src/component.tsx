@@ -141,6 +141,7 @@ const BookingModal = ({
       id_type,
       date_of_birth,
       previousReservations,
+      isPatientNotFound,
     },
     handleChange,
     errors,
@@ -153,7 +154,7 @@ const BookingModal = ({
   });
 
   const handlePatientDataResponse: OnResponseActionType<RecordTypeWithAnyValue> =
-    useCallback(({ apiValues }) => {
+    useCallback(({ apiValues, error }) => {
       const { previousReservations, patientData } = apiValues || {};
 
       const { patientName, date_of_birth, ...otherPatientData } =
@@ -166,6 +167,8 @@ const BookingModal = ({
         patient_name_f_p,
       ] = (patientName || "   ")?.split?.(" ");
 
+      const isPatientNotFound = !!error || !patientName;
+
       handleChangeMultipleInputs({
         previousReservations: previousReservations || [],
         patient_name_p,
@@ -174,6 +177,7 @@ const BookingModal = ({
         patient_name_f_p,
         date_of_birth: convertNormalFormattedDateToInputDate(date_of_birth),
         ...otherPatientData,
+        isPatientNotFound,
       });
     }, []);
 
@@ -267,15 +271,17 @@ const BookingModal = ({
     ]
   );
 
-  const handleSearchPatientData = useCallback(
-    () =>
-      fetchOldPatientData({
-        id_no,
-        id_type,
-        phone_m,
-      }),
-    [fetchOldPatientData, id_type, id_no, phone_m]
-  );
+  const handleSearchPatientData = useCallback(() => {
+    handleChange({
+      name: "isPatientNotFound",
+      value: false,
+    });
+    fetchOldPatientData({
+      id_no,
+      id_type,
+      phone_m,
+    });
+  }, [fetchOldPatientData, id_type, id_no, phone_m, handleChange]);
 
   return (
     <>
@@ -336,6 +342,17 @@ const BookingModal = ({
             </Flex>
           </Flex>
 
+          {isPatientNotFound && (
+            <Text
+              children="ptntntfound"
+              fontSize="ff8"
+              weight="700"
+              color="red"
+              margin="8px 0"
+              align="center"
+              width="100%"
+            />
+          )}
           <Flex width="100%" gap={spacing4} align="center" wrap="true">
             <Flex width="100%" gap={spacing4} align="center" wrap="true">
               <InputField
