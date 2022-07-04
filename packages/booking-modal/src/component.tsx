@@ -15,6 +15,8 @@ import useFromManager from "@exsys-clinio/form-manager";
 import { useBasicMutation, useBasicQuery } from "@exsys-clinio/network-hooks";
 import Image from "@exsys-clinio/image";
 import Button from "@exsys-clinio/button";
+import DeleteIcon from "@exsys-clinio/delete-icon";
+import PlusIcon from "@exsys-clinio/plus-icon";
 import {
   OnResponseActionType,
   RecordTypeWithAnyValue,
@@ -49,6 +51,7 @@ const {
   sp3: spacing3,
   sp2: spacing2,
   sp32: spacing32,
+  sp20: spacing20,
 } = spacings;
 
 const valueMatchPattern = "/[a-zA-Z|ء-ي]+/gi";
@@ -86,7 +89,12 @@ const BookingModal = ({
 
   const handleSaveBooking = useCallback(
     (fromValues: FormInitialValuesType) => {
-      const { date_of_birth, previousReservations, ...values } = fromValues;
+      const {
+        date_of_birth,
+        previousReservations,
+        showPatientDataForm,
+        ...values
+      } = fromValues;
 
       setItemToStorage("patientData", {
         ...values,
@@ -142,6 +150,7 @@ const BookingModal = ({
       date_of_birth,
       previousReservations,
       isPatientNotFound,
+      showPatientDataForm,
     },
     handleChange,
     errors,
@@ -178,6 +187,7 @@ const BookingModal = ({
         date_of_birth: convertNormalFormattedDateToInputDate(date_of_birth),
         ...otherPatientData,
         isPatientNotFound,
+        showPatientDataForm: !isPatientNotFound,
       });
     }, []);
 
@@ -272,16 +282,26 @@ const BookingModal = ({
   );
 
   const handleSearchPatientData = useCallback(() => {
-    handleChange({
-      name: "isPatientNotFound",
-      value: false,
+    handleChangeMultipleInputs({
+      showPatientDataForm: false,
+      isPatientNotFound: false,
     });
     fetchOldPatientData({
       id_no,
       id_type,
       phone_m,
     });
-  }, [fetchOldPatientData, id_type, id_no, phone_m, handleChange]);
+  }, [
+    fetchOldPatientData,
+    id_type,
+    id_no,
+    phone_m,
+    handleChangeMultipleInputs,
+  ]);
+
+  const handleClearSearchData = useCallback(() => {
+    handleChangeMultipleInputs(FORM_INITIAL_VALUES);
+  }, [handleChangeMultipleInputs]);
 
   return (
     <>
@@ -295,7 +315,12 @@ const BookingModal = ({
         onOk={handleSubmit}
         okText="book"
         loading={loading}
-        disabled={loading}
+        disabled={
+          loading ||
+          !patient_name_p ||
+          !patient_name_2_p ||
+          !showPatientDataForm
+        }
       >
         <Flex width="100%" gap={spacing4} wrap="true">
           <Text
@@ -383,7 +408,7 @@ const BookingModal = ({
                 name="phone_m"
                 label="mbln"
                 value={phone_m}
-                width={spacing22}
+                width={spacing20}
                 onChange={handleChange}
                 error={errors?.phone_m}
                 valueMatchPattern="/\d/g"
@@ -397,91 +422,115 @@ const BookingModal = ({
                 loading={patientDataLoading}
                 onClick={handleSearchPatientData}
               />
+
+              <Button
+                type="primary"
+                icon={<PlusIcon />}
+                disabled={patientDataLoading}
+                loading={patientDataLoading}
+              />
+
+              <Button
+                type="primary"
+                label="clr"
+                disabled={!patient_name_p || patientDataLoading}
+                loading={patientDataLoading}
+                onClick={handleClearSearchData}
+              />
             </Flex>
-            <InputField
-              name="patient_name_p"
-              label="frstnme"
-              width={spacing22}
-              value={patient_name_p}
-              onChange={handleChange}
-              error={errors?.patient_name_p}
-              valueMatchPattern={valueMatchPattern}
-              upperCaseFirstCharacter
-              disabled={patientDataLoading}
-            />
-            <InputField
-              name="patient_name_2_p"
-              label="scndnme"
-              width={spacing22}
-              value={patient_name_2_p}
-              onChange={handleChange}
-              error={errors?.patient_name_2_p}
-              valueMatchPattern={valueMatchPattern}
-              upperCaseFirstCharacter
-              disabled={patientDataLoading}
-            />
-            <InputField
-              name="patient_name_3_p"
-              label="thrdnme"
-              width={spacing22}
-              value={patient_name_3_p}
-              onChange={handleChange}
-              error={errors?.patient_name_3_p}
-              valueMatchPattern={valueMatchPattern}
-              upperCaseFirstCharacter
-              disabled={patientDataLoading}
-            />
-            <InputField
-              name="patient_name_f_p"
-              label="fmlynme"
-              width={spacing22}
-              value={patient_name_f_p}
-              onChange={handleChange}
-              error={errors?.patient_name_f_p}
-              valueMatchPattern={valueMatchPattern}
-              upperCaseFirstCharacter
-              disabled={patientDataLoading}
-            />
+
+            {showPatientDataForm && (
+              <>
+                <InputField
+                  name="patient_name_p"
+                  label="frstnme"
+                  width={spacing22}
+                  value={patient_name_p}
+                  onChange={handleChange}
+                  error={errors?.patient_name_p}
+                  valueMatchPattern={valueMatchPattern}
+                  upperCaseFirstCharacter
+                  disabled={patientDataLoading}
+                />
+                <InputField
+                  name="patient_name_2_p"
+                  label="scndnme"
+                  width={spacing22}
+                  value={patient_name_2_p}
+                  onChange={handleChange}
+                  error={errors?.patient_name_2_p}
+                  valueMatchPattern={valueMatchPattern}
+                  upperCaseFirstCharacter
+                  disabled={patientDataLoading}
+                />
+                <InputField
+                  name="patient_name_3_p"
+                  label="thrdnme"
+                  width={spacing22}
+                  value={patient_name_3_p}
+                  onChange={handleChange}
+                  error={errors?.patient_name_3_p}
+                  valueMatchPattern={valueMatchPattern}
+                  upperCaseFirstCharacter
+                  disabled={patientDataLoading}
+                />
+                <InputField
+                  name="patient_name_f_p"
+                  label="fmlynme"
+                  width={spacing22}
+                  value={patient_name_f_p}
+                  onChange={handleChange}
+                  error={errors?.patient_name_f_p}
+                  valueMatchPattern={valueMatchPattern}
+                  upperCaseFirstCharacter
+                  disabled={patientDataLoading}
+                />
+              </>
+            )}
           </Flex>
 
-          <InputField
-            customInputComponent={StyledDateInput}
-            name="date_of_birth"
-            type="date"
-            width={spacing22}
-            label="dob"
-            value={date_of_birth}
-            error={errors?.date_of_birth}
-            onChange={handleChange}
-            forceFloatingLabel
-            min={minimumBirthDate}
-            max={maximumBirthDate}
-            disabled={patientDataLoading}
-          />
+          {showPatientDataForm && (
+            <>
+              <InputField
+                customInputComponent={StyledDateInput}
+                name="date_of_birth"
+                type="date"
+                width={spacing22}
+                label="dob"
+                value={date_of_birth}
+                error={errors?.date_of_birth}
+                onChange={handleChange}
+                forceFloatingLabel
+                min={minimumBirthDate}
+                max={maximumBirthDate}
+                disabled={patientDataLoading}
+              />
 
-          <SelectWithApiQuery
-            label="gndr"
-            width={spacing22}
-            error={errors?.gender}
-            apiOrCodeId="GENDER_TYPES"
-            queryType="u_code"
-            name="gender"
-            value={gender}
-            onChange={handleChange}
-            enableNetworkCache
-            disabled={patientDataLoading}
-          />
-          <SelectWithApiQuery
-            label="whrfindus"
-            width={`calc(${spacing32} * 1.3)`}
-            apiOrCodeId="WHERE_TO_FIND_TYPES"
-            queryType="u_code"
-            name="where_find"
-            value={where_find}
-            onChange={handleChange}
-            enableNetworkCache
-            disabled={patientDataLoading}
-          />
+              <SelectWithApiQuery
+                label="gndr"
+                width={spacing22}
+                error={errors?.gender}
+                apiOrCodeId="GENDER_TYPES"
+                queryType="u_code"
+                name="gender"
+                value={gender}
+                onChange={handleChange}
+                enableNetworkCache
+                disabled={patientDataLoading}
+              />
+              <SelectWithApiQuery
+                label="whrfindus"
+                width={`calc(${spacing32} * 1.3)`}
+                apiOrCodeId="WHERE_TO_FIND_TYPES"
+                queryType="u_code"
+                name="where_find"
+                value={where_find}
+                onChange={handleChange}
+                enableNetworkCache
+                disabled={patientDataLoading}
+              />
+            </>
+          )}
         </Flex>
 
         {!!previousReservations?.length && (
@@ -519,10 +568,9 @@ const BookingModal = ({
                       <td>
                         <Flex width="100%" align="center" justify="center">
                           <Button
-                            height="18px"
-                            size="small"
+                            height="25px"
                             type="danger"
-                            label="-"
+                            icon={<DeleteIcon />}
                             onClick={handleCancelBooking(appointment_id)}
                             loading={isStillCancelingAppointment}
                             disabled={isStillCancelingAppointment}

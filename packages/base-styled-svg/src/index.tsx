@@ -50,7 +50,7 @@ const BaseStyledSvg = ({
 BaseStyledSvg.defaultProps = {
   "aria-hidden": true,
   viewBox: "64 64 896 896",
-  color: "currentcolor",
+  color: "currentColor",
   width: "1em",
   height: "1em",
 };

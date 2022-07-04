@@ -26,6 +26,7 @@ export const FORM_INITIAL_VALUES = {
   id_no: "",
   date_of_birth: "",
   isPatientNotFound: "",
+  showPatientDataForm: false,
   previousReservations: [] as PreviousReservationsItemType[],
 } as const;
 

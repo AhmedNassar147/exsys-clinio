@@ -9,6 +9,7 @@
   "sideEffects": false,
   "dependencies": {
     "@exsys-clinio/button": "1.0.0",
+    "@exsys-clinio/delete-icon": "1.0.0",
     "@exsys-clinio/flex": "1.0.0",
     "@exsys-clinio/form-manager": "1.0.0",
     "@exsys-clinio/helpers": "1.0.0",
@@ -16,6 +17,7 @@
     "@exsys-clinio/input-field": "1.0.0",
     "@exsys-clinio/modal": "1.0.0",
     "@exsys-clinio/network-hooks": "1.0.0",
+    "@exsys-clinio/plus-icon": "1.0.0",
     "@exsys-clinio/react-lazy": "1.0.0",
     "@exsys-clinio/select-with-api-query": "1.0.0",
     "@exsys-clinio/text": "1.0.0",
