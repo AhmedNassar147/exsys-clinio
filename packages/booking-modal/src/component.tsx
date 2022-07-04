@@ -299,9 +299,19 @@ const BookingModal = ({
     handleChangeMultipleInputs,
   ]);
 
-  const handleClearSearchData = useCallback(() => {
-    handleChangeMultipleInputs(FORM_INITIAL_VALUES);
-  }, [handleChangeMultipleInputs]);
+  const handleClearSearchData = useCallback(
+    () => handleChangeMultipleInputs(FORM_INITIAL_VALUES),
+    [handleChangeMultipleInputs]
+  );
+
+  const onShowPatientDataForm = useCallback(
+    () =>
+      handleChange({
+        name: "showPatientDataForm",
+        value: true,
+      }),
+    [handleChange]
+  );
 
   return (
     <>
@@ -423,12 +433,15 @@ const BookingModal = ({
                 onClick={handleSearchPatientData}
               />
 
-              <Button
-                type="primary"
-                icon={<PlusIcon />}
-                disabled={patientDataLoading}
-                loading={patientDataLoading}
-              />
+              {!showPatientDataForm && (
+                <Button
+                  type="primary"
+                  icon={<PlusIcon />}
+                  disabled={patientDataLoading}
+                  loading={patientDataLoading}
+                  onClick={onShowPatientDataForm}
+                />
+              )}
 
               <Button
                 type="primary"
