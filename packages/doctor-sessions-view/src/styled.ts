@@ -72,6 +72,7 @@ export const SessionsPaginationWrapper = styled.div`
   ${flexCenteredRowCss}
   gap: ${spacings.sp4};
   width: 100%;
+  /* flex-direction: row-reverse; */
 `;
 
 export const SessionsWrapper = styled.div`
