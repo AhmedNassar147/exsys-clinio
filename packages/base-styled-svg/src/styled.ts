@@ -3,7 +3,7 @@
  * Styled: `@exsys-clinio/base-styled-svg`.
  *
  */
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { colors } from "@exsys-clinio/theme-values";
 import { BaseStyledSvgProps } from "./index.interface";
 
@@ -60,7 +60,14 @@ const StyledSvg = styled.svg<BaseStyledSvgProps>`
     ${margin ? `margin: ${margin}` : ""};
     ${marginInlineStart ? `margin-inline-start: ${marginInlineStart}` : ""};
     ${marginInlineEnd ? `margin-inline-end: ${marginInlineEnd}` : ""};
-    ${transform ? `transform: ${transform}` : ""};
+    ${
+      transform
+        ? css`
+            transform: ${transform};
+            -webkit-transform: ${transform};
+          `
+        : ""
+    };
   `};
   ${({ disabled, useDisabledColor }) =>
     disabled &&

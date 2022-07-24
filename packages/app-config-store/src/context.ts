@@ -38,7 +38,7 @@ const mainStoreData = getItemFromStorage<AppConfigStateType>("mainStore");
 
 const activeLanguage = (
   isFakeLanguageId
-    ? mainStoreData?.languageId ?? LANGUAGE_IDS.PRIMARY
+    ? mainStoreData?.languageId ?? LANGUAGE_IDS.SECONDARY
     : preferredUserLanguageFromAppUrlNumber
 ) as LanguageValuesType;
 

@@ -16,6 +16,7 @@ import { useBasicMutation, useBasicQuery } from "@exsys-clinio/network-hooks";
 import Image from "@exsys-clinio/image";
 import Button from "@exsys-clinio/button";
 import DeleteIcon from "@exsys-clinio/delete-icon";
+import { useTranslateIdFactory } from "@exsys-clinio/labels-provider";
 import PlusIcon from "@exsys-clinio/plus-icon";
 import {
   OnResponseActionType,
@@ -78,6 +79,7 @@ const BookingModal = ({
   clinicalName,
   onBookingDoneSuccessfully,
 }: BookingModalProps) => {
+  const translateLabel = useTranslateIdFactory();
   const [bookingResultModalState, setBookingResultModalState] = useState(
     initialBookingApiDoneResults
   );
@@ -440,6 +442,7 @@ const BookingModal = ({
                   disabled={patientDataLoading}
                   loading={patientDataLoading}
                   onClick={onShowPatientDataForm}
+                  title={translateLabel("rgstr") as string}
                 />
               )}
 
