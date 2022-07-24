@@ -16,8 +16,6 @@ import { useBasicMutation, useBasicQuery } from "@exsys-clinio/network-hooks";
 import Image from "@exsys-clinio/image";
 import Button from "@exsys-clinio/button";
 import DeleteIcon from "@exsys-clinio/delete-icon";
-import { useTranslateIdFactory } from "@exsys-clinio/labels-provider";
-import PlusIcon from "@exsys-clinio/plus-icon";
 import {
   OnResponseActionType,
   RecordTypeWithAnyValue,
@@ -48,11 +46,13 @@ interface BookingModalProps {
 const {
   sp4: spacing4,
   sp22: spacing22,
+  sp18: spacing18,
   sp27: spacing27,
+  sp19: spacing19,
   sp3: spacing3,
   sp2: spacing2,
   sp32: spacing32,
-  sp20: spacing20,
+  // sp20: spacing20,
 } = spacings;
 
 const valueMatchPattern = "/[a-zA-Z|ء-ي]+/gi";
@@ -79,7 +79,6 @@ const BookingModal = ({
   clinicalName,
   onBookingDoneSuccessfully,
 }: BookingModalProps) => {
-  const translateLabel = useTranslateIdFactory();
   const [bookingResultModalState, setBookingResultModalState] = useState(
     initialBookingApiDoneResults
   );
@@ -397,7 +396,7 @@ const BookingModal = ({
                 error={errors?.id_no}
                 name="id_no"
                 value={id_no}
-                width={spacing22}
+                width={spacing18}
                 onChange={handleChange}
                 valueMatchPattern="/\d/g"
                 disabled={patientDataLoading}
@@ -405,7 +404,7 @@ const BookingModal = ({
 
               <SelectWithApiQuery
                 label="idtyp"
-                width={spacing22}
+                width={spacing19}
                 error={errors?.id_type}
                 apiOrCodeId="ID_TYPES"
                 queryType="u_code"
@@ -420,7 +419,7 @@ const BookingModal = ({
                 name="phone_m"
                 label="mbln"
                 value={phone_m}
-                width={spacing20}
+                width={spacing19}
                 onChange={handleChange}
                 error={errors?.phone_m}
                 valueMatchPattern="/\d/g"
@@ -438,11 +437,10 @@ const BookingModal = ({
               {!showPatientDataForm && (
                 <Button
                   type="primary"
-                  icon={<PlusIcon />}
+                  label="rgstr"
                   disabled={patientDataLoading}
                   loading={patientDataLoading}
                   onClick={onShowPatientDataForm}
-                  title={translateLabel("rgstr") as string}
                 />
               )}
 
