@@ -12,6 +12,8 @@ import {
   useMakeSelectCurrentLanguageId,
 } from "@exsys-clinio/app-config-store";
 import useFormManager from "@exsys-clinio/form-manager";
+import Flex from "@exsys-clinio/flex";
+import AppClientLogo from "@exsys-clinio/app-client-logo";
 import { spacings, colors } from "@exsys-clinio/theme-values";
 import { onChangeEvent } from "@exsys-clinio/types";
 import { StyledHeader, StyledAppLogo } from "./styled";
@@ -62,16 +64,19 @@ const AppHeader = () => {
     <StyledHeader>
       <Logo />
 
-      <LanguageSelectField
-        width={spacings.sp15}
-        label=""
-        usePortal
-        onChange={onChange}
-        value={values[LANGUAGE_SELECT_FIELD_NAME]}
-        allowClear={false}
-        backgroundColor={colors.appPrimary}
-        color={colors.white}
-      />
+      <Flex gap="12px" width="80%" align="center" justify="flex-end">
+        <AppClientLogo width="202px" height="50px" />
+        <LanguageSelectField
+          width={spacings.sp15}
+          label=""
+          usePortal
+          onChange={onChange}
+          value={values[LANGUAGE_SELECT_FIELD_NAME]}
+          allowClear={false}
+          backgroundColor={colors.appPrimary}
+          color={colors.white}
+        />
+      </Flex>
     </StyledHeader>
   );
 };

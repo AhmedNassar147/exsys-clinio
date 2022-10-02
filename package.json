@@ -43,6 +43,7 @@
     "@exsys-clinio/select-with-api-query": "1.0.0",
     "@exsys-clinio/selection-check": "1.0.0",
     "@exsys-clinio/selection-check-group": "1.0.0",
+    "@exsys-clinio/app-client-logo": "1.0.0",
     "@exsys-clinio/styled-helpers": "1.0.0",
     "@exsys-clinio/tag": "1.0.0",
     "@exsys-clinio/text": "1.0.0",
