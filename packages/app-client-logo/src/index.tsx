@@ -40,8 +40,5 @@ const AppClientLogo = ({
 
   return <ClientLogoImg src={clientLogoUrl} alt="client logo" {...props} />;
 };
-AppClientLogo.defaultProps = {
-  marginStart: "unset",
-};
 
 export default memo(AppClientLogo);
