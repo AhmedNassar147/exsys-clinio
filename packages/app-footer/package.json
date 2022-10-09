@@ -1,15 +1,16 @@
 {
-  "name": "@exsys-clinio/app-client-logo",
+  "name": "@exsys-clinio/app-footer",
   "version": "1.0.0",
   "private": true,
-  "description": "React component to render the client logo.",
+  "description": "React component to render the app footer.",
   "author": "exsys",
   "license": "ISC",
-  "main": "src/",
+  "main": "src/index.tsx",
+  "module": "src/index.tsx",
   "sideEffects": false,
   "dependencies": {
-    "@exsys-clinio/network-hooks": "1.0.0",
-    "@exsys-clinio/types": "1.0.0"
+    "@exsys-clinio/global-app-constants": "1.0.0",
+    "@exsys-clinio/theme-values": "1.0.0"
   },
   "peerDependencies": {
     "@types/react": "^18.x.x",

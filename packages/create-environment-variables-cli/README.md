@@ -3,13 +3,11 @@
 ## Description:
 
 ```sh
-  React component to render the client logo.
+  A package to create environment variables.
 ```
 
 # 🔨 Usage Examples
 
 ```typescript
-  [A](some usage link)
-
-  [B](another usage link)
+  please type how to use this package.
 ```

@@ -24,8 +24,6 @@ const API_IDS = {
   QUERY_PATIENT_OLD_DATA: "ex_web_patient_booking/search_patient_booking",
   // http://207.180.237.36:9090/ords/exsysexsysdba/Ex_Booking/cancel_booking
   PUT_CANCEL_PATIENT_BOOKING: "Ex_Booking/cancel_booking",
-  // http://207.180.237.36:9090/ords/exsys_api/EX_SECURITY/get_client_logo
-  QUERY_CLIENT_LOGO: "EX_SECURITY/get_client_logo",
 };
 
 export default API_IDS;

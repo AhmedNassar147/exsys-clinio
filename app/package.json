@@ -6,6 +6,7 @@
     "@exsys-clinio/api-constants": "1.0.0",
     "@exsys-clinio/app-header": "1.0.0",
     "@exsys-clinio/arrow-icon": "1.0.0",
+    "@exsys-clinio/app-footer": "1.0.0",
     "@exsys-clinio/base-styled-svg": "1.0.0",
     "@exsys-clinio/button": "1.0.0",
     "@exsys-clinio/check-icon": "1.0.0",

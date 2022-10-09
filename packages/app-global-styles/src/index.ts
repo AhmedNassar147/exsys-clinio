@@ -7,19 +7,18 @@ import { createGlobalStyle, css } from "styled-components";
 import { colors, spacings } from "@exsys-clinio/theme-values";
 import { customScrollbar } from "@exsys-clinio/styled-helpers";
 import mediaQueries from "@exsys-clinio/media-queries";
-
 import {
   APP_HEADER_HEIGHT,
   APP_HEADER_MARGIN,
   APP_HEADER_HORIZONTAL_PADDING,
+  APP_FOOTER_HEIGHT,
 } from "@exsys-clinio/global-app-constants";
 
 const fromXlMainCss = css`
   padding: 0 ${APP_HEADER_HORIZONTAL_PADDING};
-  /* margin: 0 auto; */
 `;
 
-const mainHeight = `calc(100vh - ${APP_HEADER_HEIGHT} - ${APP_HEADER_MARGIN})`;
+const mainHeight = `calc(100vh - ${APP_HEADER_HEIGHT} - ${APP_HEADER_MARGIN} - ${APP_FOOTER_HEIGHT})`;
 
 const AppGlobalStyles = createGlobalStyle`
   html {
@@ -78,19 +77,13 @@ const AppGlobalStyles = createGlobalStyle`
     `};
     ${mediaQueries.xl`
       padding: 0 ${APP_HEADER_HORIZONTAL_PADDING};
-      /* ${fromXlMainCss}; */
-    /* width: 77%; */
     `}
 
     ${mediaQueries.xxl`
-      /* width: 65%; */
-      width: 100%;
       ${fromXlMainCss};
       flex-direction: row;
     `}
     ${mediaQueries.xxxl`
-      /* width: 50%; */
-      width: 100%;
       ${fromXlMainCss};
       flex-direction: row;
     `}
