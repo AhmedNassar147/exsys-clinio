@@ -12,7 +12,7 @@ const delayProcess = require("./delayProcess");
 
 const sharedHelperKey = {
   keyOrKeys: ["help", "h"],
-  description: `to See All options for this cli. (--help || -h)`,
+  description: `to See All options for this cli. (--h || --help)`,
 };
 
 module.exports = {

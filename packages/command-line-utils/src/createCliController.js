@@ -13,16 +13,13 @@ const createCliController = async ({
   throwIfNoOptionSet,
   runCliFn,
 }) => {
-  const {
-    hasOptions,
-    shouldDisplayHelpMessage,
-    ...cliOptions
-  } = await collectProcessOptions();
+  const { hasOptions, shouldDisplayHelpMessage, ...cliOptions } =
+    await collectProcessOptions();
 
   if (throwIfNoOptionSet && !hasOptions) {
     throw new Error(`
       Please set At lest set one option for this script ${scriptName}.
-      Please run \`yarn ${scriptName} -h \` to see all available options.
+      Please run \`yarn ${scriptName} --h \` to see all available options.
     `);
   }
 
