@@ -16,6 +16,7 @@ import {
 
 const fromXlMainCss = css`
   padding: 0 ${APP_HEADER_HORIZONTAL_PADDING};
+  margin: 0 auto;
 `;
 
 const mainHeight = `calc(100vh - ${APP_HEADER_HEIGHT} - ${APP_HEADER_MARGIN} - ${APP_FOOTER_HEIGHT})`;
@@ -71,30 +72,22 @@ const AppGlobalStyles = createGlobalStyle`
     width: 100%;
     padding: 0 ${spacings.sp4};
     margin: unset;
-    flex-direction: column;
     ${mediaQueries.md`
       padding: 0 ${APP_HEADER_HORIZONTAL_PADDING};
     `};
     ${mediaQueries.xl`
-      padding: 0 ${APP_HEADER_HORIZONTAL_PADDING};
-    `}
+      ${fromXlMainCss};
+      width: 77%;
+    `};
 
     ${mediaQueries.xxl`
+      width: 65%;
       ${fromXlMainCss};
-      flex-direction: row;
     `}
     ${mediaQueries.xxxl`
+      width: 50%;
       ${fromXlMainCss};
-      flex-direction: row;
     `}
-  }
-
-  .client-logo {
-    width: 100%;
-    height: 180px;
-    ${mediaQueries.xxl`
-      width: 650px;
-    `};
   }
 `;
 

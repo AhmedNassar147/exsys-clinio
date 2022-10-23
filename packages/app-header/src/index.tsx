@@ -15,6 +15,8 @@ import useFormManager from "@exsys-clinio/form-manager";
 import { spacings, colors } from "@exsys-clinio/theme-values";
 import { onChangeEvent } from "@exsys-clinio/types";
 import { StyledHeader } from "./styled";
+// @ts-ignore
+import sagafLogo from "../../../app/assets/sagafLogo.jpeg";
 
 const AppHeader = () => {
   const { values, handleChange } = useFormManager({
@@ -36,6 +38,8 @@ const AppHeader = () => {
 
   return (
     <StyledHeader>
+      <img height="50" src={sagafLogo} alt="client-logo" />
+
       <LanguageSelectField
         width={spacings.sp15}
         label=""

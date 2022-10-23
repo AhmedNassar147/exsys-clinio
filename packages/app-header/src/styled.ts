@@ -24,4 +24,5 @@ export const StyledHeader = styled.header`
   text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
   -webkit-box-shadow: 0px 2px 0 rgb(0 0 0 / 3%);
   box-shadow: 0px 2px 0 rgb(0 0 0 / 3%);
+  justify-content: space-between;
 `;
