@@ -31,6 +31,7 @@ const DEFAULT_CLI_OPTIONS = {
   clientName: CLIENTS_NAMES.cloud,
   sourcemap: false,
   serverPort: "2665",
+  // serverPort: "9090",
 };
 
 const cliOptions = {

@@ -7,14 +7,26 @@ import { memo, useCallback, useState } from "react";
 import DoctorsSearchForm, {
   INITIAL_FORM_STATE as initialSearchParams,
 } from "@exsys-clinio/doctors-search-form";
+import LazyLoadedBookingModal from "@exsys-clinio/booking-modal";
 import { useBasicQuery } from "@exsys-clinio/network-hooks";
 import useFromManager from "@exsys-clinio/form-manager";
+import { colors } from "@exsys-clinio/theme-values";
+import Flex from "@exsys-clinio/flex";
+import Text from "@exsys-clinio/text";
 import DoctorsResultList, {
   DoctorInfoType,
 } from "@exsys-clinio/doctors-search-results-list";
-import type { OnResponseActionType, RecordType } from "@exsys-clinio/types";
+import type {
+  InitialPatientDataType,
+  OnResponseActionType,
+  RecordType,
+} from "@exsys-clinio/types";
+
+const { lightGreen } = colors;
 
 const DoctorsSearchPage = () => {
+  const [patientModalVisible, setPatientModalVisibility] = useState(true);
+
   const [doctorsData, setDoctorsData] = useState<DoctorInfoType[]>([]);
   const { values: searchFormValues, handleChange } = useFromManager({
     initialValues: initialSearchParams,
@@ -37,10 +49,48 @@ const DoctorsSearchPage = () => {
 
   const onClickSearch = useCallback(() => runQuery(), [runQuery]);
 
-  const { period_type } = searchFormValues;
+  const closePatientModal = useCallback(
+    () => setPatientModalVisibility(false),
+    []
+  );
+
+  const onDoneGetPatientData = useCallback(
+    (patientData: InitialPatientDataType) =>
+      handleChange({
+        name: "currentPatientData",
+        value: patientData,
+      }),
+    [handleChange]
+  );
+
+  const { period_type, organization_no, currentPatientData } = searchFormValues;
+
+  const {
+    patient_name_p,
+    patient_name_2_p,
+    patient_name_3_p,
+    patient_name_f_p,
+  } = currentPatientData;
+
+  const patientName = [
+    patient_name_p,
+    patient_name_2_p,
+    patient_name_3_p,
+    patient_name_f_p,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <>
+      {patientName && (
+        <Flex width="100%" justify="center" align="center">
+          <Text color={lightGreen} fontSize="ff4" align="center">
+            __t__hello , {patientName}
+          </Text>
+        </Flex>
+      )}
+
       <DoctorsSearchForm
         onSearch={onClickSearch}
         loading={loading}
@@ -51,6 +101,16 @@ const DoctorsSearchPage = () => {
         loading={loading}
         doctorsDataList={doctorsData}
         periodType={period_type}
+        organizationNo={organization_no}
+        currentPatientData={currentPatientData}
+      />
+
+      <LazyLoadedBookingModal
+        shouldMountChunk={patientModalVisible}
+        visible={patientModalVisible}
+        onClose={closePatientModal}
+        onlyUsePatientView
+        onDoneGetPatientData={onDoneGetPatientData}
       />
     </>
   );

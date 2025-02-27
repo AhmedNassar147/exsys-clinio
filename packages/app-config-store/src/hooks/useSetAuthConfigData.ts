@@ -9,7 +9,7 @@ import { AppConfigStateType } from "@exsys-clinio/types";
 import useAppConfigStore from "./useAppConfigStore";
 
 const useSetAuthConfigData = () => {
-  const { setAuthValues, state } = useAppConfigStore();
+  const { setAuthValues } = useAppConfigStore();
 
   return useCallback(
     (values: AppConfigStateType) =>
@@ -23,7 +23,7 @@ const useSetAuthConfigData = () => {
 
         return nextMainStoreData;
       }),
-    [setAuthValues, state]
+    [setAuthValues]
   );
 };
 

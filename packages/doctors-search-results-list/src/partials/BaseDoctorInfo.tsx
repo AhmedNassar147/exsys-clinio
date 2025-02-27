@@ -9,11 +9,12 @@ import Image from "@exsys-clinio/image";
 import Text from "@exsys-clinio/text";
 import { colors } from "@exsys-clinio/theme-values";
 import DoctorSessionsView from "@exsys-clinio/doctor-sessions-view";
+import { InitialPatientDataType } from "@exsys-clinio/types";
 import TimeIcon from "./TimeIcon";
 import EarplugIcon from "./EarplugIcon";
 import TextWithIcon from "./TextWithIcon";
 import {
-  DoctorInfoContianerWrapper,
+  DoctorInfoContainerWrapper,
   DoctorInfoWrapper,
   AllDoctorInfoWrapper,
 } from "../styled";
@@ -22,10 +23,14 @@ import { DoctorInfoType } from "../index.interface";
 interface DoctorInfoViewProps {
   periodType: string;
   doctorInfo: DoctorInfoType;
+  organizationNo: string;
+  currentPatientData: InitialPatientDataType;
 }
 
 const DoctorInfoView = ({
   periodType,
+  organizationNo,
+  currentPatientData,
   doctorInfo: {
     image_id,
     clinical_name,
@@ -37,7 +42,7 @@ const DoctorInfoView = ({
     specialty_name,
   },
 }: DoctorInfoViewProps) => (
-  <DoctorInfoContianerWrapper>
+  <DoctorInfoContainerWrapper>
     <AllDoctorInfoWrapper>
       <Image
         src={image_id}
@@ -89,8 +94,10 @@ const DoctorInfoView = ({
       sessionCode={session_code}
       doctorImageUrl={image_id}
       clinicalName={clinical_name}
+      organizationNo={organizationNo}
+      currentPatientData={currentPatientData}
     />
-  </DoctorInfoContianerWrapper>
+  </DoctorInfoContainerWrapper>
 );
 
 export default memo(DoctorInfoView);

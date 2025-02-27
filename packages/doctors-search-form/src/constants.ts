@@ -3,6 +3,8 @@
  * Constants: `@exsys-clinio/doctors-search-form`.
  *
  */
+import { InitialPatientDataType } from "@exsys-clinio/types";
+
 export const PERIOD_OPTIONS = [
   {
     label: "tdy",
@@ -15,6 +17,8 @@ export const PERIOD_OPTIONS = [
 ];
 
 export const INITIAL_FORM_STATE = {
+  organization_no: "",
   specialty_no: "",
   period_type: "N",
+  currentPatientData: {} as InitialPatientDataType,
 };

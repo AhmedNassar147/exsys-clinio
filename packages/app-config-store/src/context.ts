@@ -43,7 +43,7 @@ const activeLanguage = (
 ) as LanguageValuesType;
 
 export const initialState: AppConfigStateType = {
-  authorization: 3524880,
+  authorization: 111111,
   languageId: activeLanguage,
   isRightToLeft:
     LANGUAGE_DIRS[activeLanguage] !== LANGUAGE_DIRS[LANGUAGE_IDS.PRIMARY],

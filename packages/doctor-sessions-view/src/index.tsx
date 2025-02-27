@@ -8,6 +8,7 @@ import { useBasicQuery } from "@exsys-clinio/network-hooks";
 import Button from "@exsys-clinio/button";
 import ArrowIcon from "@exsys-clinio/arrow-icon";
 import type {
+  InitialPatientDataType,
   OnResponseActionType,
   RecordType,
   RecordTypeWithAnyValue,
@@ -30,6 +31,8 @@ interface DoctorSessionsViewProps extends BaseSessionViewProps {
   periodType: string;
   clinicalEntityNo: number;
   sessionCode?: number;
+  organizationNo: string;
+  currentPatientData: InitialPatientDataType;
 }
 
 const skipQuery = ({
@@ -43,6 +46,8 @@ const DoctorSessionsView = ({
   sessionCode,
   doctorImageUrl,
   clinicalName,
+  organizationNo,
+  currentPatientData,
 }: DoctorSessionsViewProps) => {
   const [{ pageNumber, sessions }, setSessionsData] = useState({
     pageNumber: 0,
@@ -65,6 +70,7 @@ const DoctorSessionsView = ({
     params: {
       clinical_entity_no: clinicalEntityNo,
       period_type: periodType,
+      organization_no: organizationNo,
       poffset: pageNumber * 4,
       session_code: sessionCode,
       slotsPerOffset: 4,
@@ -102,6 +108,7 @@ const DoctorSessionsView = ({
                 doctorImageUrl={doctorImageUrl}
                 clinicalName={clinicalName}
                 onBookingDoneSuccessfully={onBookingDoneSuccessfully}
+                currentPatientData={currentPatientData}
               />
             ))}
         </SessionsWrapper>

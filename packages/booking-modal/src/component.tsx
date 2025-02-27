@@ -3,12 +3,12 @@
  * `BookingModal`: `@exsys-clinio/booking-modal`.
  *
  */
-import { memo, useCallback, useState, useMemo } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import Modal from "@exsys-clinio/modal";
 import Flex from "@exsys-clinio/flex";
 import { spacings, colors } from "@exsys-clinio/theme-values";
 import Text, { BaseText } from "@exsys-clinio/text";
-import { setItemToStorage, getItemFromStorage } from "@exsys-clinio/helpers";
+// import { setItemToStorage, getItemFromStorage } from "@exsys-clinio/helpers";
 import InputField from "@exsys-clinio/input-field";
 import SelectWithApiQuery from "@exsys-clinio/select-with-api-query";
 import useFromManager from "@exsys-clinio/form-manager";
@@ -19,6 +19,7 @@ import DeleteIcon from "@exsys-clinio/delete-icon";
 import {
   OnResponseActionType,
   RecordTypeWithAnyValue,
+  InitialPatientDataType,
 } from "@exsys-clinio/types";
 import {
   FORM_INITIAL_VALUES,
@@ -34,13 +35,15 @@ import convertNormalFormattedDateToInputDate from "./helpers/convertNormalFormat
 interface BookingModalProps {
   visible: boolean;
   onClose: () => void;
-  appointmentId: number;
+  appointmentId?: number;
   bookingTime?: string;
-  booking: string;
-  doctorImageUrl: string;
-  bookingDate: string;
-  clinicalName: string;
-  onBookingDoneSuccessfully: () => void;
+  doctorImageUrl?: string;
+  bookingDate?: string;
+  clinicalName?: string;
+  onBookingDoneSuccessfully?: () => void;
+  onlyUsePatientView?: boolean;
+  currentPatientData: InitialPatientDataType;
+  onDoneGetPatientData?: (patientData: InitialPatientDataType) => void;
 }
 
 const {
@@ -77,7 +80,10 @@ const BookingModal = ({
   doctorImageUrl,
   bookingDate,
   clinicalName,
+  onlyUsePatientView,
   onBookingDoneSuccessfully,
+  onDoneGetPatientData,
+  currentPatientData,
 }: BookingModalProps) => {
   const [bookingResultModalState, setBookingResultModalState] = useState(
     initialBookingApiDoneResults
@@ -94,13 +100,21 @@ const BookingModal = ({
         date_of_birth,
         previousReservations,
         showPatientDataForm,
+        isPatientNotFound,
         ...values
       } = fromValues;
 
-      setItemToStorage("patientData", {
-        ...values,
-        date_of_birth,
-      });
+      if (onlyUsePatientView) {
+        const patientData = {
+          ...values,
+          date_of_birth,
+        } as InitialPatientDataType;
+
+        onClose();
+
+        onDoneGetPatientData?.(patientData);
+        return;
+      }
 
       mutate({
         body: {
@@ -124,31 +138,29 @@ const BookingModal = ({
         },
       });
     },
-    [mutate, appointmentId]
+    [mutate, appointmentId, onlyUsePatientView, onDoneGetPatientData, onClose]
   );
 
-  const formInitialValues = useMemo(() => {
-    const cashedPatientData =
-      getItemFromStorage<FormInitialValuesType>("patientData");
-
-    return {
+  const formInitialValues = useMemo(
+    () => ({
       ...FORM_INITIAL_VALUES,
-      ...cashedPatientData,
-    };
-  }, []);
+      ...currentPatientData,
+    }),
+    [currentPatientData]
+  );
 
   const {
     values: {
-      gender,
       patient_name_p,
       patient_name_2_p,
       patient_name_3_p,
       patient_name_f_p,
-      phone_m,
-      id_no,
-      where_find,
-      id_type,
       date_of_birth,
+      gender,
+      where_find,
+      id_no,
+      id_type,
+      phone_m,
       previousReservations,
       isPatientNotFound,
       showPatientDataForm,
@@ -158,45 +170,55 @@ const BookingModal = ({
     handleSubmit,
     handleChangeMultipleInputs,
   } = useFromManager({
-    initialValues: formInitialValues,
+    initialValues: formInitialValues as typeof FORM_INITIAL_VALUES,
     validate: validateFormFields,
     onSubmit: handleSaveBooking,
   });
-
-  const handlePatientDataResponse: OnResponseActionType<RecordTypeWithAnyValue> =
-    useCallback(({ apiValues, error }) => {
-      const { previousReservations, patientData } = apiValues || {};
-
-      const { patientName, date_of_birth, ...otherPatientData } =
-        patientData || {};
-
-      const [
-        patient_name_p,
-        patient_name_2_p,
-        patient_name_3_p,
-        patient_name_f_p,
-      ] = (patientName || "   ")?.split?.(" ");
-
-      const isPatientNotFound = !!error || !patientName;
-
-      handleChangeMultipleInputs({
-        previousReservations: previousReservations || [],
-        patient_name_p,
-        patient_name_2_p,
-        patient_name_3_p,
-        patient_name_f_p,
-        date_of_birth: convertNormalFormattedDateToInputDate(date_of_birth),
-        ...otherPatientData,
-        isPatientNotFound,
-        showPatientDataForm: !isPatientNotFound,
-      });
-    }, []);
 
   const {
     id_no: initialIdNo,
     id_type: initialIdType,
     phone_m: initialIdPhone,
   } = formInitialValues;
+
+  const handlePatientDataResponse: OnResponseActionType<RecordTypeWithAnyValue> =
+    useCallback(
+      ({ apiValues, error }) => {
+        const { previousReservations, patientData } = apiValues || {};
+
+        const { patientName, date_of_birth, ...otherPatientData } =
+          patientData || {};
+
+        const [
+          patient_name_p,
+          patient_name_2_p,
+          patient_name_3_p,
+          patient_name_f_p,
+        ] = (patientName || "   ")?.split?.(" ");
+
+        const {
+          patient_name_p: initialPatientName,
+          patient_name_2_p: initialPatientSecondName,
+          patient_name_3_p: initialPatientThirdName,
+          patient_name_f_p: initialPatientForthName,
+        } = currentPatientData || {};
+
+        const isPatientNotFound = !!error || !patientName;
+
+        handleChangeMultipleInputs({
+          previousReservations: previousReservations || [],
+          patient_name_p: patient_name_p || initialPatientName,
+          patient_name_2_p: patient_name_2_p || initialPatientSecondName,
+          patient_name_3_p: patient_name_3_p || initialPatientThirdName,
+          patient_name_f_p: patient_name_f_p || initialPatientForthName,
+          date_of_birth: convertNormalFormattedDateToInputDate(date_of_birth),
+          ...otherPatientData,
+          isPatientNotFound,
+          showPatientDataForm: !isPatientNotFound,
+        });
+      },
+      [handleChangeMultipleInputs, currentPatientData]
+    );
 
   const skipPatientDataQuery = useCallback(
     ({ id_no, phone_m, id_type }: RecordTypeWithAnyValue) =>
@@ -236,7 +258,7 @@ const BookingModal = ({
       if (shouldCloseMainModalIfApplicable) {
         onClose();
       }
-      onBookingDoneSuccessfully();
+      onBookingDoneSuccessfully?.();
     }
   }, [
     onBookingDoneSuccessfully,
@@ -324,7 +346,7 @@ const BookingModal = ({
         bodyPadding={spacing4}
         maskClosable={false}
         onOk={handleSubmit}
-        okText="book"
+        okText={onlyUsePatientView ? "done" : "book"}
         loading={loading}
         disabled={
           loading ||
@@ -334,49 +356,53 @@ const BookingModal = ({
         }
       >
         <Flex width="100%" gap={spacing4} wrap="true">
-          <Text
-            fontSize="ff7"
-            margin={bookingInfoTextMargin}
-            colors={appPrimary}
-          >
-            bokinginfo
-          </Text>
+          {!onlyUsePatientView && (
+            <>
+              <Text
+                fontSize="ff7"
+                margin={bookingInfoTextMargin}
+                colors={appPrimary}
+              >
+                bokinginfo
+              </Text>
 
-          <Flex
-            width="100%"
-            bordered
-            gap={spacing4}
-            wrap="true"
-            padding={spacing4}
-            margin={bookingInfoCardMargin}
-          >
-            <Image
-              src={doctorImageUrl}
-              alt="clinical"
-              height="sp16"
-              width="sp16"
-              borderRadius="4px"
-            />
-            <Flex gap={spacing4} wrap="true" column="true" flex={1}>
-              <Text
-                disableTranslation
-                children={clinicalName}
-                fontSize="ff8"
-                weight="700"
-                lines={3}
-              />
-              <Text
-                children={`__t__bookngdte : ${bookingDate}`}
-                fontSize="ff9"
-                weight="400"
-              />
-              <Text
-                children={`__t__bokngtim : ${bookingTime}`}
-                fontSize="ff9"
-                weight="400"
-              />
-            </Flex>
-          </Flex>
+              <Flex
+                width="100%"
+                bordered
+                gap={spacing4}
+                wrap="true"
+                padding={spacing4}
+                margin={bookingInfoCardMargin}
+              >
+                <Image
+                  src={doctorImageUrl || ""}
+                  alt="clinical"
+                  height="sp16"
+                  width="sp16"
+                  borderRadius="4px"
+                />
+                <Flex gap={spacing4} wrap="true" column="true" flex={1}>
+                  <Text
+                    disableTranslation
+                    children={clinicalName}
+                    fontSize="ff8"
+                    weight="700"
+                    lines={3}
+                  />
+                  <Text
+                    children={`__t__bookngdte : ${bookingDate}`}
+                    fontSize="ff9"
+                    weight="400"
+                  />
+                  <Text
+                    children={`__t__bokngtim : ${bookingTime}`}
+                    fontSize="ff9"
+                    weight="400"
+                  />
+                </Flex>
+              </Flex>
+            </>
+          )}
 
           {isPatientNotFound && (
             <Text

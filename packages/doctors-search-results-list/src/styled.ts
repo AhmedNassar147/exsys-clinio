@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { spacings, colors } from "@exsys-clinio/theme-values";
 import mediaQueries from "@exsys-clinio/media-queries";
 
-export const DoctorInfoContianerWrapper = styled.div`
+export const DoctorInfoContainerWrapper = styled.div`
   display: flex;
   width: 100%;
   border: 1px solid ${colors.inputBorderColor};

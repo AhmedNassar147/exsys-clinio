@@ -8,22 +8,30 @@ import { spacings } from "@exsys-clinio/theme-values";
 import mediaQueries from "@exsys-clinio/media-queries";
 
 export const DoctorsFormWrapper = styled.div`
+  padding-block: ${spacings.sp3} 0px;
   display: grid;
   align-items: center;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   grid-gap: 12px;
   width: 100%;
-  > .specialty-input {
+  > .organization-input,
+  .specialty-input {
+    grid-column: span 3 / auto;
+  }
+
+  > .period-input {
     grid-column: span 4 / auto;
   }
 
-  > .period-input,
-  .search-button {
+  > .search-button {
     grid-column: span 2 / auto;
   }
 
   ${mediaQueries.md`
+  > .organization-input {
+      grid-column: span 2 / auto;
+    };
   > .specialty-input {
       grid-column: span 2 / auto;
     };

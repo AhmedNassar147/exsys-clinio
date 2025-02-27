@@ -22,6 +22,7 @@ const SessionView = ({
   freeSlot,
   doctorImageUrl,
   clinicalName,
+  currentPatientData,
   onBookingDoneSuccessfully,
 }: SessionViewProps) => {
   const [currentAppointment, setAppointment] = useState<
@@ -74,6 +75,7 @@ const SessionView = ({
         doctorImageUrl={doctorImageUrl}
         bookingDate={date}
         clinicalName={clinicalName}
+        currentPatientData={currentPatientData}
         onBookingDoneSuccessfully={onBookingDoneSuccessfully}
       />
     </SessionViewWrapper>

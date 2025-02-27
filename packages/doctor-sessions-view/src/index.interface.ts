@@ -3,7 +3,10 @@
  * Types: `@exsys-clinio/doctor-sessions-view`.
  *
  */
-import { CapitalBooleanStringType } from "@exsys-clinio/types";
+import {
+  CapitalBooleanStringType,
+  InitialPatientDataType,
+} from "@exsys-clinio/types";
 
 export interface AppointmentShapeType {
   appointmentId: number;
@@ -24,4 +27,5 @@ export interface SessionViewProps extends BaseSessionViewProps {
   appointment_type: CapitalBooleanStringType;
   freeSlot: AppointmentShapeType[];
   onBookingDoneSuccessfully: () => void;
+  currentPatientData: InitialPatientDataType;
 }

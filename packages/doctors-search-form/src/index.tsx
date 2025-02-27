@@ -24,13 +24,24 @@ const DoctorsSearchForm = ({
   values,
   handleChange,
 }: DoctorsSearchFormProps) => {
-  const { specialty_no, period_type } = values;
+  const { specialty_no, period_type, organization_no } = values;
 
   return (
     <DoctorsFormWrapper>
       <SelectWithApiQuery
         queryType="query"
-        apiOrCodeId="QUERY_CLINICAL_SPECIALITIES_LIST"
+        apiOrCodeId="QUERY_ORGANIZATION_LIST"
+        name="organization_no"
+        label="rgzntn"
+        width="100%"
+        value={organization_no}
+        allowClear
+        onChange={handleChange}
+        className="organization-input"
+      />
+      <SelectWithApiQuery
+        queryType="query"
+        apiOrCodeId="QUERY_CLINICAL_SPECIALTIES_LIST"
         name="specialty_no"
         label="spec"
         width="100%"
