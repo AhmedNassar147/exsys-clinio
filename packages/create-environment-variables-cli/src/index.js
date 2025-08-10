@@ -27,6 +27,7 @@ const createEnvironmentVariablesFn = async (options) => {
     serverPort,
     certPath,
     certKeyPath,
+    clientKey,
   } = {
     ...DEFAULT_CLI_OPTIONS,
     ...options,
@@ -79,6 +80,7 @@ const createEnvironmentVariablesFn = async (options) => {
     [CUSTOM_CRA_ENV_KEYS.BUILD_TIME]: time,
     [CUSTOM_CRA_ENV_KEYS.BASE_URL]: baseUrl,
     [CUSTOM_CRA_ENV_KEYS.API_URL]: `${baseUrl}/ords/exsys_api/`,
+    [CUSTOM_CRA_ENV_KEYS.CLIENT_KEY]: clientKey || "S",
   };
 
   let envVariablesString = "";

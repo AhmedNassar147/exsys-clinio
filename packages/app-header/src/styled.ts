@@ -5,14 +5,15 @@
  */
 import styled from "styled-components";
 import {
-  APP_HEADER_HEIGHT,
   APP_HEADER_MARGIN,
   APP_HEADER_HORIZONTAL_PADDING,
 } from "@exsys-clinio/global-app-constants";
 import { colors, zIndices } from "@exsys-clinio/theme-values";
 
 export const StyledHeader = styled.header`
-  height: ${APP_HEADER_HEIGHT};
+  position: sticky;
+  top: 0;
+  height: ${({ theme: { headerHeight } }) => headerHeight};
   width: 100%;
   display: flex;
   align-items: center;
@@ -25,4 +26,8 @@ export const StyledHeader = styled.header`
   -webkit-box-shadow: 0px 2px 0 rgb(0 0 0 / 3%);
   box-shadow: 0px 2px 0 rgb(0 0 0 / 3%);
   justify-content: space-between;
+`;
+
+export const StyledLogo = styled.img`
+  height: ${({ theme: { headerLogoHeight } }) => `${headerLogoHeight}px`};
 `;

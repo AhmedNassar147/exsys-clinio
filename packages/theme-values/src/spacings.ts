@@ -39,4 +39,5 @@ export const spacings = {
   sp30: "25rem",
   sp31: "26rem",
   sp32: "27rem",
+  sp33: "30rem",
 };

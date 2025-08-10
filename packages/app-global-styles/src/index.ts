@@ -8,18 +8,14 @@ import { colors, spacings } from "@exsys-clinio/theme-values";
 import { customScrollbar } from "@exsys-clinio/styled-helpers";
 import mediaQueries from "@exsys-clinio/media-queries";
 import {
-  APP_HEADER_HEIGHT,
   APP_HEADER_MARGIN,
   APP_HEADER_HORIZONTAL_PADDING,
-  APP_FOOTER_HEIGHT,
 } from "@exsys-clinio/global-app-constants";
 
 const fromXlMainCss = css`
   padding: 0 ${APP_HEADER_HORIZONTAL_PADDING};
   margin: 0 auto;
 `;
-
-const mainHeight = `calc(100vh - ${APP_HEADER_HEIGHT} - ${APP_HEADER_MARGIN} - ${APP_FOOTER_HEIGHT})`;
 
 const AppGlobalStyles = createGlobalStyle`
   html {
@@ -61,8 +57,24 @@ const AppGlobalStyles = createGlobalStyle`
   }
 
   main {
-    min-height: ${mainHeight};
-    max-height: ${mainHeight};
+
+    ${({
+      // @ts-ignore
+      theme: { headerHeight, footerHeight, useCustomFooter },
+    }) => {
+      if (useCustomFooter) {
+        return "";
+      }
+
+      const mainHeight = `calc(100vh - ${
+        headerHeight as string
+      } - ${APP_HEADER_MARGIN} - ${footerHeight})`;
+
+      return `
+        min-height: ${mainHeight};
+        max-height: ${mainHeight};
+      `;
+    }}
     width: 100%;
     overflow: auto;
   };

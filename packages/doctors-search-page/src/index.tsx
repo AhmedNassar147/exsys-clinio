@@ -63,23 +63,14 @@ const DoctorsSearchPage = () => {
     [handleChange]
   );
 
-  const { period_type, organization_no, currentPatientData } = searchFormValues;
-
   const {
-    patient_name_p,
-    patient_name_2_p,
-    patient_name_3_p,
-    patient_name_f_p,
-  } = currentPatientData;
+    period_type,
+    organization_no,
+    currentPatientData,
+    // clinical_entity_no,
+  } = searchFormValues;
 
-  const patientName = [
-    patient_name_p,
-    patient_name_2_p,
-    patient_name_3_p,
-    patient_name_f_p,
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const { patientName } = currentPatientData;
 
   return (
     <>
@@ -102,6 +93,7 @@ const DoctorsSearchPage = () => {
         doctorsDataList={doctorsData}
         periodType={period_type}
         organizationNo={organization_no}
+        // selectedClinicalEntityNo={clinical_entity_no}
         currentPatientData={currentPatientData}
       />
 

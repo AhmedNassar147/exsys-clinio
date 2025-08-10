@@ -55,10 +55,11 @@ const {
   sp3: spacing3,
   sp2: spacing2,
   sp32: spacing32,
+  sp33: spacing33,
   // sp20: spacing20,
 } = spacings;
 
-const valueMatchPattern = "/[a-zA-Z|ء-ي]+/gi";
+const valueMatchPattern = "/^[a-zA-Zء-ي\\s]+$/gi";
 
 const serverTextMargin = `0 0 ${spacing2}`;
 const bookingInfoTextMargin = `${spacing2} 0 0`;
@@ -101,12 +102,14 @@ const BookingModal = ({
         previousReservations,
         showPatientDataForm,
         isPatientNotFound,
+        patientName,
         ...values
       } = fromValues;
 
       if (onlyUsePatientView) {
         const patientData = {
           ...values,
+          patientName,
           date_of_birth,
         } as InitialPatientDataType;
 
@@ -116,9 +119,20 @@ const BookingModal = ({
         return;
       }
 
+      const [
+        patient_name_p,
+        patient_name_2_p,
+        patient_name_3_p,
+        patient_name_f_p,
+      ] = (patientName || "   ")?.split?.(" ");
+
       mutate({
         body: {
           ...values,
+          patient_name_p: patient_name_p || patientName,
+          patient_name_2_p,
+          patient_name_3_p,
+          patient_name_f_p,
           date_of_birth: convertInputDateToNormalFormat(date_of_birth),
           session_length: 0,
           booking_type: "N",
@@ -151,10 +165,6 @@ const BookingModal = ({
 
   const {
     values: {
-      patient_name_p,
-      patient_name_2_p,
-      patient_name_3_p,
-      patient_name_f_p,
       date_of_birth,
       gender,
       where_find,
@@ -164,6 +174,7 @@ const BookingModal = ({
       previousReservations,
       isPatientNotFound,
       showPatientDataForm,
+      patientName,
     },
     handleChange,
     errors,
@@ -189,29 +200,19 @@ const BookingModal = ({
         const { patientName, date_of_birth, ...otherPatientData } =
           patientData || {};
 
-        const [
-          patient_name_p,
-          patient_name_2_p,
-          patient_name_3_p,
-          patient_name_f_p,
-        ] = (patientName || "   ")?.split?.(" ");
-
         const {
-          patient_name_p: initialPatientName,
-          patient_name_2_p: initialPatientSecondName,
-          patient_name_3_p: initialPatientThirdName,
-          patient_name_f_p: initialPatientForthName,
+          patientName: initialPatientName,
+          date_of_birth: initialDateOfBirth,
         } = currentPatientData || {};
 
         const isPatientNotFound = !!error || !patientName;
 
         handleChangeMultipleInputs({
           previousReservations: previousReservations || [],
-          patient_name_p: patient_name_p || initialPatientName,
-          patient_name_2_p: patient_name_2_p || initialPatientSecondName,
-          patient_name_3_p: patient_name_3_p || initialPatientThirdName,
-          patient_name_f_p: patient_name_f_p || initialPatientForthName,
-          date_of_birth: convertNormalFormattedDateToInputDate(date_of_birth),
+          patientName: patientName || initialPatientName,
+          date_of_birth:
+            convertNormalFormattedDateToInputDate(date_of_birth) ||
+            initialDateOfBirth,
           ...otherPatientData,
           isPatientNotFound,
           showPatientDataForm: !isPatientNotFound,
@@ -348,12 +349,7 @@ const BookingModal = ({
         onOk={handleSubmit}
         okText={onlyUsePatientView ? "done" : "book"}
         loading={loading}
-        disabled={
-          loading ||
-          !patient_name_p ||
-          !patient_name_2_p ||
-          !showPatientDataForm
-        }
+        disabled={loading || !patientName || !showPatientDataForm}
       >
         <Flex width="100%" gap={spacing4} wrap="true">
           {!onlyUsePatientView && (
@@ -473,7 +469,7 @@ const BookingModal = ({
               <Button
                 type="primary"
                 label="clr"
-                disabled={!patient_name_p || patientDataLoading}
+                disabled={!patientName || patientDataLoading}
                 loading={patientDataLoading}
                 onClick={handleClearSearchData}
               />
@@ -482,17 +478,61 @@ const BookingModal = ({
             {showPatientDataForm && (
               <>
                 <InputField
-                  name="patient_name_p"
-                  label="frstnme"
-                  width={spacing22}
-                  value={patient_name_p}
+                  name="patientName"
+                  label="patientnme"
+                  width={spacing33}
+                  value={patientName}
                   onChange={handleChange}
-                  error={errors?.patient_name_p}
+                  error={errors?.patientName}
                   valueMatchPattern={valueMatchPattern}
                   upperCaseFirstCharacter
                   disabled={patientDataLoading}
                 />
-                <InputField
+
+                {showPatientDataForm && (
+                  <>
+                    <InputField
+                      customInputComponent={StyledDateInput}
+                      name="date_of_birth"
+                      type="date"
+                      width={spacing22}
+                      label="dob"
+                      value={date_of_birth}
+                      error={errors?.date_of_birth}
+                      onChange={handleChange}
+                      forceFloatingLabel
+                      min={minimumBirthDate}
+                      max={maximumBirthDate}
+                      disabled={patientDataLoading}
+                    />
+
+                    <SelectWithApiQuery
+                      label="gndr"
+                      width={spacing22}
+                      error={errors?.gender}
+                      apiOrCodeId="GENDER_TYPES"
+                      queryType="u_code"
+                      name="gender"
+                      value={gender}
+                      onChange={handleChange}
+                      enableNetworkCache
+                      disabled={patientDataLoading}
+                    />
+                    <SelectWithApiQuery
+                      label="whrfindus"
+                      width={`calc(${spacing32} * 1.3)`}
+                      apiOrCodeId="WHERE_TO_FIND_TYPES"
+                      queryType="u_code"
+                      name="where_find"
+                      value={where_find}
+                      onChange={handleChange}
+                      enableNetworkCache
+                      disabled={patientDataLoading}
+                    />
+                  </>
+                )}
+
+                {/* <InputField
                   name="patient_name_2_p"
                   label="scndnme"
                   width={spacing22}
@@ -524,12 +564,12 @@ const BookingModal = ({
                   valueMatchPattern={valueMatchPattern}
                   upperCaseFirstCharacter
                   disabled={patientDataLoading}
-                />
+                /> */}
               </>
             )}
           </Flex>
 
-          {showPatientDataForm && (
+          {/* {showPatientDataForm && (
             <>
               <InputField
                 customInputComponent={StyledDateInput}
@@ -570,7 +610,7 @@ const BookingModal = ({
                 disabled={patientDataLoading}
               />
             </>
-          )}
+          )} */}
         </Flex>
 
         {!!previousReservations?.length && (

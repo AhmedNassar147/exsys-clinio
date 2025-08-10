@@ -30,10 +30,7 @@ export interface AppConfigStateType {
 }
 
 export interface InitialPatientDataType {
-  patient_name_p: string;
-  patient_name_2_p: string;
-  patient_name_3_p: string;
-  patient_name_f_p: string;
+  patientName: string;
   phone_m: string;
   gender: string;
   where_find: string;

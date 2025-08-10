@@ -14,23 +14,13 @@ const checkIfThisDateBeforeThanOther = (date1: Date, date2: Date) =>
 type ResultType = Record<keyof FormInitialValuesType, string>;
 
 const validateFormFields = (formValues: FormInitialValuesType) => {
-  const {
-    patient_name_p,
-    patient_name_f_p,
-    patient_name_3_p,
-    phone_m,
-    date_of_birth,
-    gender,
-    id_type,
-    id_no,
-  } = formValues;
+  const { patientName, phone_m, date_of_birth, gender, id_type, id_no } =
+    formValues;
 
   let formErrors = {} as ResultType;
 
   let valuesToValidate = {
-    patient_name_p,
-    patient_name_f_p,
-    patient_name_3_p,
+    patientName,
     phone_m,
     date_of_birth,
     gender,

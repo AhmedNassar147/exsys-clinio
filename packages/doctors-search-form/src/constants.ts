@@ -19,6 +19,7 @@ export const PERIOD_OPTIONS = [
 export const INITIAL_FORM_STATE = {
   organization_no: "",
   specialty_no: "",
+  clinical_entity_no: undefined as number | undefined,
   period_type: "N",
   currentPatientData: {} as InitialPatientDataType,
 };

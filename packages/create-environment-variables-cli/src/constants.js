@@ -13,6 +13,7 @@ const CUSTOM_CRA_ENV_KEYS = {
   BUILD_TIME: "REACT_APP_BUILD_TIME",
   BASE_URL: "REACT_APP_BASE_URL",
   API_URL: "REACT_APP_API_URL",
+  CLIENT_KEY: "REACT_APP_CLIENT_KEY",
 };
 
 const CLIENTS_NAMES = {
@@ -31,6 +32,7 @@ const DEFAULT_CLI_OPTIONS = {
   clientName: CLIENTS_NAMES.cloud,
   sourcemap: false,
   serverPort: "2665",
+  clientKey: "H",
   // serverPort: "9090",
 };
 
