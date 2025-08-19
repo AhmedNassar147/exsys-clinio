@@ -4,7 +4,7 @@
  *
  */
 import { validateFields } from "@exsys-clinio/helpers";
-import convertInputDateToNormalFormat from "./convertInputDateToNormalFormat";
+import { convertInputDateToNormalFormat } from "@exsys-clinio/helpers";
 import { minimumBirthDate } from "../constants";
 import type { FormInitialValuesType } from "../constants";
 
@@ -14,8 +14,7 @@ const checkIfThisDateBeforeThanOther = (date1: Date, date2: Date) =>
 type ResultType = Record<keyof FormInitialValuesType, string>;
 
 const validateFormFields = (formValues: FormInitialValuesType) => {
-  const { patientName, phone_m, date_of_birth, gender, id_type, id_no } =
-    formValues;
+  const { patientName, phone_m, date_of_birth, id_type, id_no } = formValues;
 
   let formErrors = {} as ResultType;
 
@@ -23,7 +22,7 @@ const validateFormFields = (formValues: FormInitialValuesType) => {
     patientName,
     phone_m,
     date_of_birth,
-    gender,
+    // gender,
     id_type,
     id_no,
   };

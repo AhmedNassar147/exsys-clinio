@@ -11,7 +11,10 @@ import {
   LanguageValuesType,
 } from "@exsys-clinio/global-app-constants";
 import { setItemToStorage, getItemFromStorage } from "@exsys-clinio/helpers";
-import { AppConfigStateType } from "@exsys-clinio/types";
+import {
+  AppConfigStateType,
+  CapitalBooleanStringType,
+} from "@exsys-clinio/types";
 import { AppConfigStoreApi } from "./index.interface";
 
 const NOT_FOUND_LANG_CODE = 999999999;
@@ -42,11 +45,23 @@ const activeLanguage = (
     : preferredUserLanguageFromAppUrlNumber
 ) as LanguageValuesType;
 
+export const baseClientConfigData = {
+  headerHeight: "60px",
+  siteLogoUrl: "",
+  headerLogoHeight: "50",
+  footerHeight: "45px",
+  hideHoursAndSeniorityLevel: "N" as CapitalBooleanStringType,
+  footerBackgroundImageUrl: "",
+  hideGenderField: "N" as CapitalBooleanStringType,
+  hideWhereFoundUsField: "N" as CapitalBooleanStringType,
+};
+
 export const initialState: AppConfigStateType = {
   authorization: 111111,
   languageId: activeLanguage,
   isRightToLeft:
     LANGUAGE_DIRS[activeLanguage] !== LANGUAGE_DIRS[LANGUAGE_IDS.PRIMARY],
+  ...baseClientConfigData,
 };
 
 setItemToStorage("mainStore", initialState);

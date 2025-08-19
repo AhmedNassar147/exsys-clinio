@@ -10,10 +10,10 @@ import {
 } from "@exsys-clinio/global-app-constants";
 import { colors, zIndices } from "@exsys-clinio/theme-values";
 
-export const StyledHeader = styled.header`
+export const StyledHeader = styled.header<{ headerHeight: string }>`
   position: sticky;
   top: 0;
-  height: ${({ theme: { headerHeight } }) => headerHeight};
+  height: ${({ headerHeight }) => headerHeight};
   width: 100%;
   display: flex;
   align-items: center;
@@ -28,6 +28,9 @@ export const StyledHeader = styled.header`
   justify-content: space-between;
 `;
 
-export const StyledLogo = styled.img`
-  height: ${({ theme: { headerLogoHeight } }) => `${headerLogoHeight}px`};
+export const StyledLogo = styled.img<{ headerLogoHeight: string }>`
+  ${({ headerLogoHeight }) => `
+    height: ${headerLogoHeight}px;
+    width: ${headerLogoHeight}px;
+  `};
 `;

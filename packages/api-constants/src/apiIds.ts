@@ -26,6 +26,8 @@ const API_IDS = {
   QUERY_PATIENT_OLD_DATA: "ex_web_patient_booking/search_patient_booking",
   // http://207.180.237.36:9090/ords/exsysexsysdba/Ex_Booking/cancel_booking
   PUT_CANCEL_PATIENT_BOOKING: "Ex_Booking/cancel_booking",
+  // http://136.243.62.235:9090/ords/exsys_api/ex_web_patient_booking/web_doctor_list?authorization=111111&planguageid=1&organization_no=03&specialty_no=&dob=
+  QUERY_DOCTORS_LIST: "ex_web_patient_booking/web_doctor_list",
 };
 
 export default API_IDS;

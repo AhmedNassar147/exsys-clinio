@@ -8,7 +8,8 @@ import Modal from "@exsys-clinio/modal";
 import Flex from "@exsys-clinio/flex";
 import { spacings, colors } from "@exsys-clinio/theme-values";
 import Text, { BaseText } from "@exsys-clinio/text";
-// import { setItemToStorage, getItemFromStorage } from "@exsys-clinio/helpers";
+import { useClientSettings } from "@exsys-clinio/app-config-store";
+import { convertInputDateToNormalFormat } from "@exsys-clinio/helpers";
 import InputField from "@exsys-clinio/input-field";
 import SelectWithApiQuery from "@exsys-clinio/select-with-api-query";
 import useFromManager from "@exsys-clinio/form-manager";
@@ -29,7 +30,6 @@ import {
 } from "./constants";
 import { StyledDateInput, StyledTable } from "./styled";
 import validateFormFields from "./helpers/validateFormFields";
-import convertInputDateToNormalFormat from "./helpers/convertInputDateToNormalFormat";
 import convertNormalFormattedDateToInputDate from "./helpers/convertNormalFormattedDateToInputDate";
 
 interface BookingModalProps {
@@ -86,6 +86,8 @@ const BookingModal = ({
   onDoneGetPatientData,
   currentPatientData,
 }: BookingModalProps) => {
+  const { hideGenderField, hideWhereFoundUsField } = useClientSettings();
+
   const [bookingResultModalState, setBookingResultModalState] = useState(
     initialBookingApiDoneResults
   );
@@ -215,7 +217,7 @@ const BookingModal = ({
             initialDateOfBirth,
           ...otherPatientData,
           isPatientNotFound,
-          showPatientDataForm: !isPatientNotFound,
+          showPatientDataForm: isPatientNotFound,
         });
       },
       [handleChangeMultipleInputs, currentPatientData]
@@ -305,22 +307,32 @@ const BookingModal = ({
     ]
   );
 
-  const handleSearchPatientData = useCallback(() => {
-    handleChangeMultipleInputs({
-      showPatientDataForm: false,
-      isPatientNotFound: false,
-    });
-    fetchOldPatientData({
+  const handleClickLoginButton = useCallback(() => {
+    const searchOptions = {
       id_no,
       id_type,
       phone_m,
-    });
+    };
+
+    const shouldSkipLogin = skipPatientDataQuery(searchOptions);
+
+    if (shouldSkipLogin) {
+      handleChangeMultipleInputs({
+        showPatientDataForm: true,
+        isPatientNotFound: false,
+      });
+
+      return;
+    }
+
+    fetchOldPatientData(searchOptions);
   }, [
     fetchOldPatientData,
     id_type,
     id_no,
     phone_m,
     handleChangeMultipleInputs,
+    skipPatientDataQuery,
   ]);
 
   const handleClearSearchData = useCallback(
@@ -328,14 +340,14 @@ const BookingModal = ({
     [handleChangeMultipleInputs]
   );
 
-  const onShowPatientDataForm = useCallback(
-    () =>
-      handleChange({
-        name: "showPatientDataForm",
-        value: true,
-      }),
-    [handleChange]
-  );
+  // const onShowPatientDataForm = useCallback(
+  //   () =>
+  //     handleChange({
+  //       name: "showPatientDataForm",
+  //       value: true,
+  //     }),
+  //   [handleChange]
+  // );
 
   return (
     <>
@@ -349,7 +361,14 @@ const BookingModal = ({
         onOk={handleSubmit}
         okText={onlyUsePatientView ? "done" : "book"}
         loading={loading}
-        disabled={loading || !patientName || !showPatientDataForm}
+        disabled={
+          loading ||
+          !patientName ||
+          !date_of_birth ||
+          !phone_m ||
+          !id_type ||
+          !id_no
+        }
       >
         <Flex width="100%" gap={spacing4} wrap="true">
           {!onlyUsePatientView && (
@@ -450,13 +469,13 @@ const BookingModal = ({
 
               <Button
                 type="primary"
-                label="srch"
+                label="login"
                 disabled={patientDataLoading}
                 loading={patientDataLoading}
-                onClick={handleSearchPatientData}
+                onClick={handleClickLoginButton}
               />
 
-              {!showPatientDataForm && (
+              {/* {!showPatientDataForm && (
                 <Button
                   type="primary"
                   label="rgstr"
@@ -464,7 +483,7 @@ const BookingModal = ({
                   loading={patientDataLoading}
                   onClick={onShowPatientDataForm}
                 />
-              )}
+              )} */}
 
               <Button
                 type="primary"
@@ -506,29 +525,34 @@ const BookingModal = ({
                       disabled={patientDataLoading}
                     />
 
-                    <SelectWithApiQuery
-                      label="gndr"
-                      width={spacing22}
-                      error={errors?.gender}
-                      apiOrCodeId="GENDER_TYPES"
-                      queryType="u_code"
-                      name="gender"
-                      value={gender}
-                      onChange={handleChange}
-                      enableNetworkCache
-                      disabled={patientDataLoading}
-                    />
-                    <SelectWithApiQuery
-                      label="whrfindus"
-                      width={`calc(${spacing32} * 1.3)`}
-                      apiOrCodeId="WHERE_TO_FIND_TYPES"
-                      queryType="u_code"
-                      name="where_find"
-                      value={where_find}
-                      onChange={handleChange}
-                      enableNetworkCache
-                      disabled={patientDataLoading}
-                    />
+                    {!hideGenderField && (
+                      <SelectWithApiQuery
+                        label="gndr"
+                        width={spacing22}
+                        error={errors?.gender}
+                        apiOrCodeId="GENDER_TYPES"
+                        queryType="u_code"
+                        name="gender"
+                        value={gender}
+                        onChange={handleChange}
+                        enableNetworkCache
+                        disabled={patientDataLoading}
+                      />
+                    )}
+
+                    {!hideWhereFoundUsField && (
+                      <SelectWithApiQuery
+                        label="whrfindus"
+                        width={`calc(${spacing32} * 1.3)`}
+                        apiOrCodeId="WHERE_TO_FIND_TYPES"
+                        queryType="u_code"
+                        name="where_find"
+                        value={where_find}
+                        onChange={handleChange}
+                        enableNetworkCache
+                        disabled={patientDataLoading}
+                      />
+                    )}
                   </>
                 )}
 

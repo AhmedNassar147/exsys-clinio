@@ -10,13 +10,12 @@ import LanguageSelectField, {
 import {
   useLanguageSwitcher,
   useMakeSelectCurrentLanguageId,
+  useClientSettings,
 } from "@exsys-clinio/app-config-store";
 import useFormManager from "@exsys-clinio/form-manager";
 import { spacings, colors } from "@exsys-clinio/theme-values";
 import { onChangeEvent } from "@exsys-clinio/types";
 import { StyledHeader, StyledLogo } from "./styled";
-// @ts-ignore
-import sagafLogo from "../../../app/assets/sagafLogo.jpeg";
 
 const AppHeader = () => {
   const { values, handleChange } = useFormManager({
@@ -24,6 +23,8 @@ const AppHeader = () => {
       [LANGUAGE_SELECT_FIELD_NAME]: useMakeSelectCurrentLanguageId(),
     },
   });
+
+  const { headerHeight, headerLogoHeight, siteLogoUrl } = useClientSettings();
 
   const handleLanguageSwitched = useLanguageSwitcher();
 
@@ -37,8 +38,12 @@ const AppHeader = () => {
   );
 
   return (
-    <StyledHeader>
-      <StyledLogo src={sagafLogo} alt="client-logo" />
+    <StyledHeader headerHeight={headerHeight}>
+      <StyledLogo
+        src={siteLogoUrl}
+        headerLogoHeight={headerLogoHeight}
+        alt="client-logo"
+      />
 
       <LanguageSelectField
         width={spacings.sp15}

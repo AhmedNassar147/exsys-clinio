@@ -17,7 +17,11 @@ const fromXlMainCss = css`
   margin: 0 auto;
 `;
 
-const AppGlobalStyles = createGlobalStyle`
+const AppGlobalStyles = createGlobalStyle<{
+  headerHeight: string;
+  footerHeight: string;
+  footerBackgroundImageUrl?: string;
+}>`
   html {
     box-sizing: border-box;
     scrollbar-width: thin;
@@ -57,18 +61,8 @@ const AppGlobalStyles = createGlobalStyle`
   }
 
   main {
-
-    ${({
-      // @ts-ignore
-      theme: { headerHeight, footerHeight, useCustomFooter },
-    }) => {
-      if (useCustomFooter) {
-        return "";
-      }
-
-      const mainHeight = `calc(100vh - ${
-        headerHeight as string
-      } - ${APP_HEADER_MARGIN} - ${footerHeight})`;
+    ${({ headerHeight, footerHeight }) => {
+      const mainHeight = `calc(100vh - ${headerHeight} - ${APP_HEADER_MARGIN} - ${footerHeight})`;
 
       return `
         min-height: ${mainHeight};

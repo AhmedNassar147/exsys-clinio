@@ -3,6 +3,7 @@
  * Package: `@exsys-clinio/types`.
  *
  */
+import { CapitalBooleanStringType } from "./base.interface";
 
 export interface BaseSvgProps {
   width?: string;
@@ -27,6 +28,14 @@ export interface AppConfigStateType {
   languageId: number;
   authorization: number;
   isRightToLeft: boolean;
+  headerHeight: string;
+  siteLogoUrl: string;
+  headerLogoHeight: string;
+  hideGenderField?: CapitalBooleanStringType;
+  hideWhereFoundUsField?: CapitalBooleanStringType;
+  hideHoursAndSeniorityLevel?: CapitalBooleanStringType;
+  footerHeight: string;
+  footerBackgroundImageUrl?: string;
 }
 
 export interface InitialPatientDataType {

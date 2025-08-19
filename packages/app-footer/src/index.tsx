@@ -4,8 +4,8 @@
  *
  */
 import { memo } from "react";
-import { useTheme } from "styled-components";
 import Flex from "@exsys-clinio/flex";
+import { useClientSettings } from "@exsys-clinio/app-config-store";
 import TiktokIcon from "@exsys-clinio/tiktok-icon";
 import WhatsappIcon from "@exsys-clinio/whatsapp-icon";
 import youtubeIcon from "@exsys-clinio/youtube-icon";
@@ -47,7 +47,7 @@ const iconsArray = [
 
 const AppFooter = () => {
   // @ts-ignore
-  const { useCustomFooter } = useTheme();
+  const { footerBackgroundImageUrl, footerHeight } = useClientSettings();
 
   const exsysFooter = (
     <>
@@ -62,8 +62,11 @@ const AppFooter = () => {
   );
 
   return (
-    <StyledFooter useCustomFooter={useCustomFooter}>
-      {useCustomFooter ? (
+    <StyledFooter
+      footerHeight={footerHeight}
+      footerBackgroundImageUrl={footerBackgroundImageUrl}
+    >
+      {!!footerBackgroundImageUrl ? (
         <Flex align="center" justify="center" column="true" width="100%">
           <Flex
             width="100%"

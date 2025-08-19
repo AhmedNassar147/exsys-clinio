@@ -3,7 +3,6 @@
  * Helper: `convertInputDateToNormalFormat`.
  *
  */
-
 const convertInputDateToNormalFormat = (date: string) => {
   if (date) {
     const [year, month, day] = date.split("-");

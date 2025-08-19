@@ -3,16 +3,15 @@
  * Package: `@exsys-clinio/doctors-search-form`.
  *
  */
-import { memo, useCallback } from "react";
-import SelectWithApiQuery, {
-  TransformSelectWithQueryApiDataFnType,
-} from "@exsys-clinio/select-with-api-query";
+import { memo, useCallback, useMemo } from "react";
+import SelectWithApiQuery from "@exsys-clinio/select-with-api-query";
 import SelectionCheckGroup from "@exsys-clinio/selection-check-group";
 import Button from "@exsys-clinio/button";
 import Image from "@exsys-clinio/image";
 import Flex from "@exsys-clinio/flex";
 import Text from "@exsys-clinio/text";
-import { onChangeEvent, RecordTypeWithAnyValue } from "@exsys-clinio/types";
+import { convertInputDateToNormalFormat } from "@exsys-clinio/helpers";
+import { onChangeEvent } from "@exsys-clinio/types";
 import { MenuItemsDataSourceItemType } from "@exsys-clinio/menu-items";
 import { DoctorsFormWrapper } from "./styled";
 import { PERIOD_OPTIONS, INITIAL_FORM_STATE } from "./constants";
@@ -30,27 +29,20 @@ const DoctorsSearchForm = ({
   values,
   handleChange,
 }: DoctorsSearchFormProps) => {
-  const { specialty_no, period_type, organization_no, clinical_entity_no } =
-    values;
+  const {
+    specialty_no,
+    period_type,
+    organization_no,
+    clinical_entity_no,
+    currentPatientData,
+  } = values;
 
-  const transformApiDataFn: TransformSelectWithQueryApiDataFnType<RecordTypeWithAnyValue> =
-    useCallback(({ data }) => {
-      if (!data) {
-        return;
-      }
+  const { date_of_birth } = currentPatientData;
 
-      return data.map(
-        ({
-          clinical_entity_no,
-          clinical_name,
-          image_id,
-        }: RecordTypeWithAnyValue) => ({
-          key: clinical_entity_no,
-          value: clinical_name,
-          image_id,
-        })
-      );
-    }, []);
+  const dob = useMemo(
+    () => (date_of_birth ? convertInputDateToNormalFormat(date_of_birth) : ""),
+    [date_of_birth]
+  );
 
   const renderItem = useCallback((option: MenuItemsDataSourceItemType) => {
     const {
@@ -95,21 +87,24 @@ const DoctorsSearchForm = ({
         value={specialty_no}
         onChange={handleChange}
         className="specialty-input"
+        apiParams={{
+          organization_no,
+        }}
       />
 
       <SelectWithApiQuery
         queryType="query"
-        apiOrCodeId="QUERY_CLINICAL_LIST"
+        apiOrCodeId="QUERY_DOCTORS_LIST"
         name="clinical_entity_no"
         label="docname"
         width="100%"
         value={clinical_entity_no}
         onChange={handleChange}
         className="specialty-input"
-        transformApiDataFn={transformApiDataFn}
         renderItem={renderItem}
         apiParams={{
           specialty_no,
+          dob,
         }}
       />
 

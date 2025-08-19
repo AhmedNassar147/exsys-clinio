@@ -3,7 +3,7 @@
  * Package: `@exsys-clinio/global-app-constants`.
  *
  */
-import { spacings, colors } from "@exsys-clinio/theme-values";
+import { spacings } from "@exsys-clinio/theme-values";
 
 export const T_TRANSLATE_REGEXP = /__t__\w+/gim;
 
@@ -31,27 +31,3 @@ export const QUERY_TYPES = Object.freeze({
   U_CODES: "u_code",
   CODES: "code",
 } as const);
-
-export const CLIENT_NAME_KEYS = {
-  // hokmaa
-  H: "H",
-  // sagaf
-  S: "S",
-};
-
-export const CLIENTS_CONFIG = {
-  [CLIENT_NAME_KEYS.H]: {
-    headerHeight: "80px",
-    headerLogoHeight: "75",
-    useCustomFooter: true,
-    footerHeight: "260px",
-    footerBackgroundColor: colors.green1,
-  },
-  [CLIENT_NAME_KEYS.S]: {
-    headerHeight: APP_HEADER_HEIGHT,
-    headerLogoHeight: "50",
-    useCustomFooter: false,
-    footerHeight: APP_FOOTER_HEIGHT,
-    footerBackgroundColor: colors.white,
-  },
-};

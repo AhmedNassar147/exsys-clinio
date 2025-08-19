@@ -12,6 +12,7 @@ import { useBasicQuery } from "@exsys-clinio/network-hooks";
 import useFromManager from "@exsys-clinio/form-manager";
 import { colors } from "@exsys-clinio/theme-values";
 import Flex from "@exsys-clinio/flex";
+import { convertInputDateToNormalFormat } from "@exsys-clinio/helpers";
 import Text from "@exsys-clinio/text";
 import DoctorsResultList, {
   DoctorInfoType,
@@ -39,15 +40,29 @@ const DoctorsSearchPage = () => {
     setDoctorsData(() => (!!error || !data ? [] : data));
   }, []);
 
+  const { currentPatientData, ...otherSearchValues } = searchFormValues;
+
+  const { period_type, organization_no } = searchFormValues;
+  const { patientName, date_of_birth } = currentPatientData;
+
+  const getDob = useCallback(
+    (date_of_birth?: string) =>
+      date_of_birth ? convertInputDateToNormalFormat(date_of_birth) : "",
+    []
+  );
+
   const { runQuery, loading } = useBasicQuery({
     apiId: "QUERY_CLINICAL_LIST",
     runQueryWhenLanguageChanged: true,
     callOnFirstRender: true,
     onResponse: handleDoctorsResponse,
-    params: searchFormValues,
+    disableParamsChangeCheck: true,
   });
 
-  const onClickSearch = useCallback(() => runQuery(), [runQuery]);
+  const onClickSearch = useCallback(
+    () => runQuery({ ...otherSearchValues, dob: getDob(date_of_birth) }),
+    [runQuery, otherSearchValues, date_of_birth, getDob]
+  );
 
   const closePatientModal = useCallback(
     () => setPatientModalVisibility(false),
@@ -55,22 +70,18 @@ const DoctorsSearchPage = () => {
   );
 
   const onDoneGetPatientData = useCallback(
-    (patientData: InitialPatientDataType) =>
+    (patientData: InitialPatientDataType) => {
       handleChange({
         name: "currentPatientData",
         value: patientData,
-      }),
-    [handleChange]
+      });
+
+      const { date_of_birth } = patientData;
+
+      runQuery({ ...otherSearchValues, dob: getDob(date_of_birth) });
+    },
+    [handleChange, otherSearchValues, runQuery, getDob]
   );
-
-  const {
-    period_type,
-    organization_no,
-    currentPatientData,
-    // clinical_entity_no,
-  } = searchFormValues;
-
-  const { patientName } = currentPatientData;
 
   return (
     <>

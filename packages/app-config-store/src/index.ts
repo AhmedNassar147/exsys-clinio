@@ -11,3 +11,4 @@ export { default as useMakeSelectAuthorization } from "./hooks/useMakeSelectAuth
 export { default as useMakeSelectCurrentLanguageId } from "./hooks/useMakeSelectCurrentLanguageId";
 export { default as useSetAuthConfigData } from "./hooks/useSetAuthConfigData";
 export { default as useMakeSelectIsRTLLayout } from "./hooks/useMakeSelectIsRTLLayout";
+export { default as useClientSettings } from "./hooks/useClientSettings";

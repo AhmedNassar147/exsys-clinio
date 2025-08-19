@@ -18,4 +18,5 @@ export { default as sortObjectByKeysAndStringify } from "./sortObjectByKeysAndSt
 export { default as setIn } from "./setIn";
 export { default as isObjectHasKey } from "./isObjectHasKey";
 export { default as validateFields } from "./validateFields";
+export { default as convertInputDateToNormalFormat } from "./convertInputDateToNormalFormat";
 export * from "./localStorage";
