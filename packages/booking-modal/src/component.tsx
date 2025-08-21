@@ -209,18 +209,33 @@ const BookingModal = ({
 
         const isPatientNotFound = !!error || !patientName;
 
-        handleChangeMultipleInputs({
-          previousReservations: previousReservations || [],
+        const newPatientData = {
           patientName: patientName || initialPatientName,
           date_of_birth:
             convertNormalFormattedDateToInputDate(date_of_birth) ||
             initialDateOfBirth,
           ...otherPatientData,
+        };
+
+        handleChangeMultipleInputs({
+          previousReservations: previousReservations || [],
+          ...newPatientData,
           isPatientNotFound,
           showPatientDataForm: isPatientNotFound,
         });
+
+        if (onlyUsePatientView && !isPatientNotFound) {
+          onClose();
+          onDoneGetPatientData?.(newPatientData);
+        }
       },
-      [handleChangeMultipleInputs, currentPatientData]
+      [
+        handleChangeMultipleInputs,
+        currentPatientData,
+        onDoneGetPatientData,
+        onClose,
+        onlyUsePatientView,
+      ]
     );
 
   const skipPatientDataQuery = useCallback(

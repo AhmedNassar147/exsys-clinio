@@ -3,7 +3,7 @@
  * Package: `@exsys-clinio/doctors-search-page`.
  *
  */
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import DoctorsSearchForm, {
   INITIAL_FORM_STATE as initialSearchParams,
 } from "@exsys-clinio/doctors-search-form";
@@ -45,10 +45,9 @@ const DoctorsSearchPage = () => {
   const { period_type, organization_no } = searchFormValues;
   const { patientName, date_of_birth } = currentPatientData;
 
-  const getDob = useCallback(
-    (date_of_birth?: string) =>
-      date_of_birth ? convertInputDateToNormalFormat(date_of_birth) : "",
-    []
+  const formattedDOB = useMemo(
+    () => (date_of_birth ? convertInputDateToNormalFormat(date_of_birth) : ""),
+    [date_of_birth]
   );
 
   const { runQuery, loading } = useBasicQuery({
@@ -56,13 +55,13 @@ const DoctorsSearchPage = () => {
     runQueryWhenLanguageChanged: true,
     callOnFirstRender: true,
     onResponse: handleDoctorsResponse,
-    disableParamsChangeCheck: true,
+    params: {
+      ...otherSearchValues,
+      dob: formattedDOB,
+    },
   });
 
-  const onClickSearch = useCallback(
-    () => runQuery({ ...otherSearchValues, dob: getDob(date_of_birth) }),
-    [runQuery, otherSearchValues, date_of_birth, getDob]
-  );
+  const onClickSearch = useCallback(() => runQuery(), [runQuery]);
 
   const closePatientModal = useCallback(
     () => setPatientModalVisibility(false),
@@ -70,17 +69,12 @@ const DoctorsSearchPage = () => {
   );
 
   const onDoneGetPatientData = useCallback(
-    (patientData: InitialPatientDataType) => {
+    (patientData: InitialPatientDataType) =>
       handleChange({
         name: "currentPatientData",
         value: patientData,
-      });
-
-      const { date_of_birth } = patientData;
-
-      runQuery({ ...otherSearchValues, dob: getDob(date_of_birth) });
-    },
-    [handleChange, otherSearchValues, runQuery, getDob]
+      }),
+    [handleChange]
   );
 
   return (

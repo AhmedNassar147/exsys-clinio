@@ -29,8 +29,5 @@ export const StyledHeader = styled.header<{ headerHeight: string }>`
 `;
 
 export const StyledLogo = styled.img<{ headerLogoHeight: string }>`
-  ${({ headerLogoHeight }) => `
-    height: ${headerLogoHeight}px;
-    width: ${headerLogoHeight}px;
-  `};
+  height: ${({ headerLogoHeight }) => `${headerLogoHeight}px`};
 `;

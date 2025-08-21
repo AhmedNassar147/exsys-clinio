@@ -105,6 +105,7 @@ const DoctorsSearchForm = ({
         apiParams={{
           specialty_no,
           dob,
+          organization_no,
         }}
       />
 

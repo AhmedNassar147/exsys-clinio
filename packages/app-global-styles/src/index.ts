@@ -61,20 +61,20 @@ const AppGlobalStyles = createGlobalStyle<{
   }
 
   main {
+    width: 100%;
+    overflow: auto;
     ${({ headerHeight, footerHeight }) => {
       const mainHeight = `calc(100vh - ${headerHeight} - ${APP_HEADER_MARGIN} - ${footerHeight})`;
 
       return `
         min-height: ${mainHeight};
-        max-height: ${mainHeight};
+        max-height: auto;
       `;
     }}
-    width: 100%;
-    overflow: auto;
   };
-  .main-clinio-app-wrapper{
-    min-height: inherit;
-    max-height: inherit;
+    .main-clinio-app-wrapper{
+      min-height: inherit;
+      // max-height: inherit;
     width: 100%;
     padding: 0 ${spacings.sp4};
     margin: unset;

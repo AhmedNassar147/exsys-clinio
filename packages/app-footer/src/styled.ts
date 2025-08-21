@@ -11,7 +11,7 @@ export const StyledFooter = styled.footer<{
   footerHeight: string;
   footerBackgroundImageUrl?: string;
 }>`
-  position: fixed;
+  position: relative;
   z-index: 0;
   bottom: 0;
   width: 100%;

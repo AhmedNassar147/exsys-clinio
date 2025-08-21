@@ -42,8 +42,8 @@ const App = () => {
             </div>
           </main>
         </LabelsProvider>
-        <GlobalStyles />
         <AppFooter />
+        <GlobalStyles />
       </AppConfigProvider>
     </BrowserRouter>
   );
