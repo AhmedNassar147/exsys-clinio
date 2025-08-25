@@ -4,12 +4,13 @@
  *
  */
 import { memo, useCallback, useMemo, useState } from "react";
+import dayjs, { Dayjs } from "dayjs";
 import Modal from "@exsys-clinio/modal";
 import Flex from "@exsys-clinio/flex";
 import { spacings, colors } from "@exsys-clinio/theme-values";
+import DatePicker from "@exsys-clinio/date-picker";
 import Text, { BaseText } from "@exsys-clinio/text";
 import { useClientSettings } from "@exsys-clinio/app-config-store";
-import { convertInputDateToNormalFormat } from "@exsys-clinio/helpers";
 import InputField from "@exsys-clinio/input-field";
 import SelectWithApiQuery from "@exsys-clinio/select-with-api-query";
 import useFromManager from "@exsys-clinio/form-manager";
@@ -24,13 +25,12 @@ import {
 } from "@exsys-clinio/types";
 import {
   FORM_INITIAL_VALUES,
-  minimumBirthDate,
-  maximumBirthDate,
   FormInitialValuesType,
+  maximumBirthDate,
+  minimumBirthDate,
 } from "./constants";
-import { StyledDateInput, StyledTable } from "./styled";
+import { StyledTable } from "./styled";
 import validateFormFields from "./helpers/validateFormFields";
-import convertNormalFormattedDateToInputDate from "./helpers/convertNormalFormattedDateToInputDate";
 
 interface BookingModalProps {
   visible: boolean;
@@ -135,7 +135,7 @@ const BookingModal = ({
           patient_name_2_p,
           patient_name_3_p,
           patient_name_f_p,
-          date_of_birth: convertInputDateToNormalFormat(date_of_birth),
+          date_of_birth,
           session_length: 0,
           booking_type: "N",
           appointment_id: appointmentId,
@@ -211,9 +211,7 @@ const BookingModal = ({
 
         const newPatientData = {
           patientName: patientName || initialPatientName,
-          date_of_birth:
-            convertNormalFormattedDateToInputDate(date_of_birth) ||
-            initialDateOfBirth,
+          date_of_birth: date_of_birth || initialDateOfBirth,
           ...otherPatientData,
         };
 
@@ -355,6 +353,13 @@ const BookingModal = ({
     [handleChangeMultipleInputs]
   );
 
+  const disabledDate = useCallback(
+    (date: Dayjs) =>
+      date.isBefore(dayjs(minimumBirthDate)) ||
+      date.isAfter(dayjs(maximumBirthDate)),
+    []
+  );
+
   // const onShowPatientDataForm = useCallback(
   //   () =>
   //     handleChange({
@@ -462,8 +467,8 @@ const BookingModal = ({
                 label="idtyp"
                 width={spacing19}
                 error={errors?.id_type}
-                apiOrCodeId="ID_TYPES"
-                queryType="u_code"
+                apiOrCodeId="QUERY_PATIENTD_IDS_LIST"
+                queryType="query"
                 name="id_type"
                 value={id_type}
                 onChange={handleChange}
@@ -525,18 +530,16 @@ const BookingModal = ({
 
                 {showPatientDataForm && (
                   <>
-                    <InputField
-                      customInputComponent={StyledDateInput}
+                    <DatePicker
                       name="date_of_birth"
-                      type="date"
                       width={spacing22}
                       label="dob"
                       value={date_of_birth}
                       error={errors?.date_of_birth}
                       onChange={handleChange}
                       forceFloatingLabel
-                      min={minimumBirthDate}
-                      max={maximumBirthDate}
+                      allowClear={false}
+                      disabledDate={disabledDate}
                       disabled={patientDataLoading}
                     />
 

@@ -1,0 +1,15 @@
+{
+  "name": "@exsys-clinio/date-picker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "React component to render a date picker.",
+  "author": "exsys",
+  "license": "ISC",
+  "main": "src/",
+  "sideEffects": false,
+  "peerDependencies": {
+    "@types/react": "^16.x.x",
+    "@types/styled-components": "^5.x.x"
+  },
+  "enableBabelTranspilation": true
+}

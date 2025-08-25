@@ -13,6 +13,7 @@
     "@exsys-clinio/clear-icon": "1.0.0",
     "@exsys-clinio/close-icon": "1.0.0",
     "@exsys-clinio/customize-webpack": "1.0.0",
+    "@exsys-clinio/date-picker": "1.0.0",
     "@exsys-clinio/delete-icon": "1.0.0",
     "@exsys-clinio/doctor-sessions-view": "1.0.0",
     "@exsys-clinio/doctors-search-form": "1.0.0",

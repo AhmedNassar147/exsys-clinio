@@ -3,14 +3,13 @@
  * Package: `@exsys-clinio/doctors-search-form`.
  *
  */
-import { memo, useCallback, useMemo } from "react";
+import { memo, useCallback } from "react";
 import SelectWithApiQuery from "@exsys-clinio/select-with-api-query";
 import SelectionCheckGroup from "@exsys-clinio/selection-check-group";
 import Button from "@exsys-clinio/button";
 import Image from "@exsys-clinio/image";
 import Flex from "@exsys-clinio/flex";
 import Text from "@exsys-clinio/text";
-import { convertInputDateToNormalFormat } from "@exsys-clinio/helpers";
 import { onChangeEvent } from "@exsys-clinio/types";
 import { MenuItemsDataSourceItemType } from "@exsys-clinio/menu-items";
 import { DoctorsFormWrapper } from "./styled";
@@ -38,11 +37,6 @@ const DoctorsSearchForm = ({
   } = values;
 
   const { date_of_birth } = currentPatientData;
-
-  const dob = useMemo(
-    () => (date_of_birth ? convertInputDateToNormalFormat(date_of_birth) : ""),
-    [date_of_birth]
-  );
 
   const renderItem = useCallback((option: MenuItemsDataSourceItemType) => {
     const {
@@ -104,7 +98,7 @@ const DoctorsSearchForm = ({
         renderItem={renderItem}
         apiParams={{
           specialty_no,
-          dob,
+          dob: date_of_birth,
           organization_no,
         }}
       />

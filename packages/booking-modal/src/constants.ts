@@ -19,7 +19,7 @@ export const FORM_INITIAL_VALUES = {
   phone_m: "",
   gender: "",
   where_find: "",
-  id_type: "",
+  id_type: "N",
   id_no: "",
   date_of_birth: "",
   isPatientNotFound: "",
@@ -29,12 +29,6 @@ export const FORM_INITIAL_VALUES = {
 
 export type FormInitialValuesType = typeof FORM_INITIAL_VALUES;
 
-export const minimumBirthDate = "1900-01-01";
+export const minimumBirthDate = new Date("1920-01-01");
 
-const to2Digits = (value: string) =>
-  !value || value.length === 1 ? `0${value || 0}` : value;
-
-const [day, month, year] = new Intl.DateTimeFormat(["ban", "id"])
-  .format(new Date())
-  .split("/");
-export const maximumBirthDate = `${year}-${to2Digits(month)}-${to2Digits(day)}`;
+export const maximumBirthDate = new Date();

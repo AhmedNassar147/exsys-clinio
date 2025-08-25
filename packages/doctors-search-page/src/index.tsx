@@ -3,7 +3,7 @@
  * Package: `@exsys-clinio/doctors-search-page`.
  *
  */
-import { memo, useCallback, useMemo, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import DoctorsSearchForm, {
   INITIAL_FORM_STATE as initialSearchParams,
 } from "@exsys-clinio/doctors-search-form";
@@ -12,7 +12,6 @@ import { useBasicQuery } from "@exsys-clinio/network-hooks";
 import useFromManager from "@exsys-clinio/form-manager";
 import { colors } from "@exsys-clinio/theme-values";
 import Flex from "@exsys-clinio/flex";
-import { convertInputDateToNormalFormat } from "@exsys-clinio/helpers";
 import Text from "@exsys-clinio/text";
 import DoctorsResultList, {
   DoctorInfoType,
@@ -45,11 +44,6 @@ const DoctorsSearchPage = () => {
   const { period_type, organization_no } = searchFormValues;
   const { patientName, date_of_birth } = currentPatientData;
 
-  const formattedDOB = useMemo(
-    () => (date_of_birth ? convertInputDateToNormalFormat(date_of_birth) : ""),
-    [date_of_birth]
-  );
-
   const { runQuery, loading } = useBasicQuery({
     apiId: "QUERY_CLINICAL_LIST",
     runQueryWhenLanguageChanged: true,
@@ -57,7 +51,7 @@ const DoctorsSearchPage = () => {
     onResponse: handleDoctorsResponse,
     params: {
       ...otherSearchValues,
-      dob: formattedDOB,
+      dob: date_of_birth,
     },
   });
 
