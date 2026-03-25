@@ -11,6 +11,7 @@ import { RecordTypeWithAnyValue } from "@exsys-clinio/types";
 
 const style = css<RecordTypeWithAnyValue>`
   width: 100%;
+  border: 1px solid ${colors.alhokamaPrimary} !important;
   ${({ error }) =>
     error &&
     `

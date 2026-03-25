@@ -11,10 +11,10 @@ import {
   disabledBackgroundCss,
 } from "@exsys-clinio/styled-helpers";
 import {
-  BUTTON_TYPE_STYLES,
   BUTTON_SIZE_STYLES,
   BUTTON_SHAPES,
   BUTTON_TYPES,
+  BUTTON_TYPE_STYLES_ALHOKAMA,
 } from "./constants";
 import { BaseProps } from "./index.interface";
 
@@ -56,7 +56,7 @@ const buttonTypeCssHelper = css<BaseProps>`
       hoverBorder,
       hoverColor,
       ghostColor,
-    } = BUTTON_TYPE_STYLES[styleType || "default"];
+    } = BUTTON_TYPE_STYLES_ALHOKAMA[styleType || "default"];
 
     const isPrimaryButton = styleType === BUTTON_TYPES.PRIMARY;
     const isDangerButton = styleType === BUTTON_TYPES.DANGER;

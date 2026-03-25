@@ -44,3 +44,7 @@ export const StyledLink = styled.a`
   text-decoration: none;
   cursor: pointer;
 `;
+
+export const StyledParagraph = styled.p`
+  color: ${colors.alhokamaPrimary};
+`;

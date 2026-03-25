@@ -32,7 +32,6 @@ const DEFAULT_CLI_OPTIONS = {
   sourcemap: false,
   serverPort: "2665",
   clientKey: "H",
-  // serverPort: "9090",
 };
 
 const cliOptions = {

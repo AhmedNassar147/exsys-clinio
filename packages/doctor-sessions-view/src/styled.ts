@@ -43,12 +43,12 @@ export const AppointmentsWrapper = styled(Flex)`
 
 export const BookingTimeItem = styled(Text)`
   text-align: center;
-  color: ${colors.appPrimary};
+  color: ${colors.alhokamaPrimary};
   padding: ${spacings.sp1};
   font-weight: 400;
   word-break: break-word;
   &:hover {
-    background-color: ${colors.appPrimary};
+    background-color: ${colors.alhokamaPrimary};
     color: ${colors.white};
     border-radius: ${spacings.sp2};
     cursor: pointer;
@@ -72,6 +72,15 @@ export const SessionsPaginationWrapper = styled.div`
   ${flexCenteredRowCss}
   gap: ${spacings.sp4};
   width: 100%;
+  button {
+    background-color: ${colors.alhokamaTertiary};
+    color: ${colors.alhokamaPrimary};
+    border-color: ${colors.alhokamaTertiary};
+    &:hover {
+      background-color: ${colors.alhokamaTertiary};
+      border-color: ${colors.alhokamaTertiary};
+    }
+  }
   /* flex-direction: row-reverse; */
 `;
 

@@ -30,11 +30,10 @@ const SelectionCheck = ({
   overflow,
   readonly,
 }: SelectionCheckProps) => {
-  const [
-    { actualValue: checkedValue, isStringValue: isCheckBooleanString },
-  ] = useMemo(() => {
-    return [getBooleanValueFromMaybeNonOne(checked)];
-  }, [checked]);
+  const [{ actualValue: checkedValue, isStringValue: isCheckBooleanString }] =
+    useMemo(() => {
+      return [getBooleanValueFromMaybeNonOne(checked)];
+    }, [checked]);
 
   const handleClick = useCallback(() => {
     const nextChecked = getCheckInputNextCheckValue(
@@ -76,7 +75,7 @@ const SelectionCheck = ({
           margin="0"
           ellipsis="true"
           fontSize="inherit"
-          color={checkedValue ? colors.appPrimary : "inherit"}
+          color={checkedValue ? colors.alhokamaPrimary : "inherit"}
           cursor="inherit"
           weight={fontWeight}
           lineheight="normal"

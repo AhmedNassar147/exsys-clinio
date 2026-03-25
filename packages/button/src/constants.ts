@@ -48,16 +48,16 @@ export const BUTTON_TYPES = Object.freeze({
   LINK: "link",
 } as const);
 
-const PRIMARY_BORDER = `1px solid ${colors.appPrimary}`;
-const DANGER_BORDER = `1px solid ${colors.red}`;
+const PRIMARY_BORDER = `1px solid ${colors.alhokamaPrimary}`;
+const DANGER_BORDER = `1px solid ${colors.alhokamaPrimary}`;
 
 const DEFAULT_STYLE = Object.freeze({
   color: colors.inputLabelColor,
   backgroundColor: colors.white,
   border: `1px solid ${colors.inputBorderColor}`,
-  hoverBorder: `1px solid ${colors.appPrimary}`,
-  hoverColor: colors.appPrimary,
-  ghostColor: colors.appPrimary,
+  hoverBorder: `1px solid ${colors.alhokamaPrimary}`,
+  hoverColor: colors.alhokamaPrimary,
+  ghostColor: colors.alhokamaPrimary,
 });
 
 export const BUTTON_TYPE_STYLES = Object.freeze({
@@ -73,6 +73,37 @@ export const BUTTON_TYPE_STYLES = Object.freeze({
   [BUTTON_TYPES.DANGER]: {
     color: colors.white,
     backgroundColor: colors.red,
+    border: DANGER_BORDER,
+    hoverBorder: DANGER_BORDER,
+    hoverColor: colors.white,
+    ghostColor: colors.red,
+  },
+  [BUTTON_TYPES.DASHED]: {
+    ...DEFAULT_STYLE,
+    border: `1px dashed ${colors.inputBorderColor}`,
+  },
+  [BUTTON_TYPES.LINK]: {
+    backgroundColor: colors.white,
+    color: colors.appPrimary,
+    border: "none",
+    hoverBorder: "none",
+    hoverColor: colors.appPrimary,
+    ghostColor: colors.appPrimary,
+  },
+});
+export const BUTTON_TYPE_STYLES_ALHOKAMA = Object.freeze({
+  [BUTTON_TYPES.DEFAULT]: DEFAULT_STYLE,
+  [BUTTON_TYPES.PRIMARY]: {
+    color: colors.alhokamaSecondary,
+    backgroundColor: colors.alhokamaTertiary,
+    border: `1px solid ${colors.alhokamaTertiary}`,
+    hoverBorder: `1px solid ${colors.alhokamaTertiary}`,
+    hoverColor: colors.alhokamaPrimary,
+    ghostColor: colors.alhokamaPrimary,
+  },
+  [BUTTON_TYPES.DANGER]: {
+    color: colors.alhokamaTertiary,
+    backgroundColor: colors.alhokamaPrimary,
     border: DANGER_BORDER,
     hoverBorder: DANGER_BORDER,
     hoverColor: colors.white,

@@ -15,8 +15,6 @@ import {
 } from "../styled";
 import { SessionViewProps, AppointmentShapeType } from "../index.interface";
 
-const { appPrimary } = colors;
-
 const SessionView = ({
   date,
   freeSlot,
@@ -43,15 +41,13 @@ const SessionView = ({
         ellipsis="true"
         disableTranslation
         align="center"
-        color={appPrimary}
+        color={colors.alhokamaSecondary}
         fontSize="ff7"
         title={date}
       />
-
       <AppointmentsWrapper>
         {freeSlot?.map((item) => {
           const { appointmentId, bookingTime } = item;
-
           return (
             <BookingTimeItem
               key={appointmentId}
@@ -65,7 +61,6 @@ const SessionView = ({
           );
         })}
       </AppointmentsWrapper>
-
       <LazyLoadedBookingModal
         shouldMountChunk={!!currentAppointment}
         visible={!!currentAppointment}

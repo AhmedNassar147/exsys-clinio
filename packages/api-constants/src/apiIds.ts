@@ -30,6 +30,9 @@ const API_IDS = {
   QUERY_DOCTORS_LIST: "ex_web_patient_booking/web_doctor_list",
   // http://136.243.62.235:9090/ords/exsys_api/ex_web_patient_booking/pop_patient_id_codes?authorization=111111&planguageid=1
   QUERY_PATIENTD_IDS_LIST: "ex_web_patient_booking/pop_patient_id_codes",
+  //https://alhokama.ex-his.com/ords/exsys_api/ex_mobile_app/get_site_contact_information?planguageid=2&authorization=111111
+  QUERY_ORGANIZATION_INFORMATION_DATA:
+    "ex_mobile_app/get_site_contact_information",
 };
 
 export default API_IDS;

@@ -13,6 +13,7 @@ import type {
   RecordType,
   RecordTypeWithAnyValue,
 } from "@exsys-clinio/types";
+import { colors } from "@exsys-clinio/theme-values";
 import {
   MainSessionsWrapper,
   SessionsWrapper,
@@ -27,6 +28,7 @@ const SessionView = lazy(
     )
 );
 
+const { alhokamaPrimary } = colors;
 interface DoctorSessionsViewProps extends BaseSessionViewProps {
   periodType: string;
   clinicalEntityNo: number;
@@ -115,7 +117,7 @@ const DoctorSessionsView = ({
         {periodType === "N" && (
           <SessionsPaginationWrapper>
             <Button
-              icon={<ArrowIcon direction="left" color="currentcolor" />}
+              icon={<ArrowIcon direction="left" color={alhokamaPrimary} />}
               shape="circle"
               type="primary"
               disabled={!pageNumber || loading}
@@ -123,7 +125,7 @@ const DoctorSessionsView = ({
               loading={loading}
             />
             <Button
-              icon={<ArrowIcon direction="right" color="currentcolor" />}
+              icon={<ArrowIcon direction="right" color={alhokamaPrimary} />}
               shape="circle"
               type="primary"
               loading={loading}

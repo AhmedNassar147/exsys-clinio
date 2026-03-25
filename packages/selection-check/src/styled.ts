@@ -13,7 +13,7 @@ import {
 } from "@exsys-clinio/styled-helpers";
 import { BaseSelectionCheckProps } from "@exsys-clinio/types";
 
-const { inputLabelColor, white, inputBorderColor, appPrimary } = colors;
+const { inputLabelColor, white, inputBorderColor, alhokamaPrimary } = colors;
 const { ff8: mediumFont } = fontSizes;
 
 const radioBorderMode = css<BaseSelectionCheckProps>`
@@ -25,7 +25,7 @@ const radioBorderMode = css<BaseSelectionCheckProps>`
 `;
 
 const radioCheckMarkCss = css<BaseSelectionCheckProps>`
-  background-color: ${({ checked }) => (checked ? appPrimary : white)};
+  background-color: ${({ checked }) => (checked ? alhokamaPrimary : white)};
   opacity: 1;
   width: 8px;
   ${radioBorderMode};
@@ -91,15 +91,15 @@ export const CheckWrapper = styled.span<BaseSelectionCheckProps>`
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   &:hover {
-    border-color: ${appPrimary};
+    border-color: ${alhokamaPrimary};
   }
   ${flexCenteredRowCss};
   ${({ checked, mode, disabled }) =>
     checked &&
     !disabled &&
     `
-    border: 1px solid ${appPrimary};
-    background-color: ${mode === "radio" ? white : appPrimary};
+    border: 1px solid ${alhokamaPrimary};
+    background-color: ${mode === "radio" ? white : alhokamaPrimary};
   `}
   ${({ disabled }) => disabled && disabledBackgroundCss}
 `;

@@ -28,7 +28,7 @@ import {
 } from "@exsys-clinio/types";
 import { SelectFieldProps, SelectModeType } from "./index.interface";
 
-const { inputBorderColor, lighterBlack } = colors;
+const { alhokamaPrimary } = colors;
 const { type, ...defaultSelectFieldProps } = INPUT_FIELD_DEFAULT_PROPS;
 
 const usePageControls = () => ({
@@ -166,7 +166,7 @@ const SelectField = ({
 
   const renderAddonAfter = useCallback(() => {
     if (loading) {
-      return <LoadingIcon color={inputBorderColor} />;
+      return <LoadingIcon color={alhokamaPrimary} />;
     }
 
     const showClearIcon = allowClear && !fieldDisabled && forceLabelToFloat;
@@ -175,7 +175,7 @@ const SelectField = ({
       <>
         {showClearIcon && (
           <CloseIcon
-            color={lighterBlack}
+            color={alhokamaPrimary}
             onClick={handleClearAll}
             size="0.8em"
           />
@@ -185,7 +185,7 @@ const SelectField = ({
             height="1em"
             width="1em"
             direction={visible ? "up" : "down"}
-            color={inputBorderColor}
+            color={alhokamaPrimary}
             onClick={openDropdown}
           />
         )}

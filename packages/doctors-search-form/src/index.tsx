@@ -6,7 +6,7 @@
 import { memo, useCallback } from "react";
 import SelectWithApiQuery from "@exsys-clinio/select-with-api-query";
 import SelectionCheckGroup from "@exsys-clinio/selection-check-group";
-import Button from "@exsys-clinio/button";
+// import Button from "@exsys-clinio/button";
 import Image from "@exsys-clinio/image";
 import Flex from "@exsys-clinio/flex";
 import Text from "@exsys-clinio/text";
@@ -113,14 +113,14 @@ const DoctorsSearchForm = ({
         className="period-input"
       />
 
-      <Button
+      {/* <Button
         label="srch"
         type="primary"
         onClick={onSearch}
         loading={loading}
         disabled={loading}
         className="search-button"
-      />
+      /> */}
     </DoctorsFormWrapper>
   );
 };

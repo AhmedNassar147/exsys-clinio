@@ -65,7 +65,14 @@ const serverTextMargin = `0 0 ${spacing2}`;
 const bookingInfoTextMargin = `${spacing2} 0 0`;
 const bookingInfoCardMargin = `0 0 0 ${spacing3}`;
 
-const { red, lightGreen, appPrimary } = colors;
+const {
+  red,
+  lightGreen,
+  // appPrimary,
+  alhokamaPrimary,
+  // alhokamaSecondary,
+  // alhokamaTertiary,
+} = colors;
 
 const initialBookingApiDoneResults = {
   message: "",
@@ -396,7 +403,7 @@ const BookingModal = ({
               <Text
                 fontSize="ff7"
                 margin={bookingInfoTextMargin}
-                colors={appPrimary}
+                color={colors.alhokamaPrimary}
               >
                 bokinginfo
               </Text>
@@ -420,19 +427,20 @@ const BookingModal = ({
                   <Text
                     disableTranslation
                     children={clinicalName}
+                    colors={alhokamaPrimary}
                     fontSize="ff8"
                     weight="700"
                     lines={3}
                   />
                   <Text
                     children={`__t__bookngdte : ${bookingDate}`}
-                    fontSize="ff9"
-                    weight="400"
+                    fontSize="18px"
+                    weight="500"
                   />
                   <Text
                     children={`__t__bokngtim : ${bookingTime}`}
-                    fontSize="ff9"
-                    weight="400"
+                    fontSize="18px"
+                    weight="500"
                   />
                 </Flex>
               </Flex>
@@ -461,8 +469,8 @@ const BookingModal = ({
                 onChange={handleChange}
                 valueMatchPattern="/\d/g"
                 disabled={patientDataLoading}
+                borderColor={colors.alhokamaPrimary}
               />
-
               <SelectWithApiQuery
                 label="idtyp"
                 width={spacing19}
@@ -475,7 +483,6 @@ const BookingModal = ({
                 enableNetworkCache
                 disabled={patientDataLoading}
               />
-
               <InputField
                 name="phone_m"
                 label="mbln"
@@ -485,8 +492,8 @@ const BookingModal = ({
                 error={errors?.phone_m}
                 valueMatchPattern="/\d/g"
                 disabled={patientDataLoading}
+                borderColor={colors.alhokamaPrimary}
               />
-
               <Button
                 type="primary"
                 label="login"
@@ -494,7 +501,6 @@ const BookingModal = ({
                 loading={patientDataLoading}
                 onClick={handleClickLoginButton}
               />
-
               {/* {!showPatientDataForm && (
                 <Button
                   type="primary"
@@ -504,7 +510,6 @@ const BookingModal = ({
                   onClick={onShowPatientDataForm}
                 />
               )} */}
-
               <Button
                 type="primary"
                 label="clr"
@@ -513,7 +518,6 @@ const BookingModal = ({
                 onClick={handleClearSearchData}
               />
             </Flex>
-
             {showPatientDataForm && (
               <>
                 <InputField
@@ -526,8 +530,8 @@ const BookingModal = ({
                   valueMatchPattern={valueMatchPattern}
                   upperCaseFirstCharacter
                   disabled={patientDataLoading}
+                  borderColor={colors.alhokamaPrimary}
                 />
-
                 {showPatientDataForm && (
                   <>
                     <DatePicker
@@ -542,7 +546,6 @@ const BookingModal = ({
                       disabledDate={disabledDate}
                       disabled={patientDataLoading}
                     />
-
                     {!hideGenderField && (
                       <SelectWithApiQuery
                         label="gndr"
@@ -557,7 +560,6 @@ const BookingModal = ({
                         disabled={patientDataLoading}
                       />
                     )}
-
                     {!hideWhereFoundUsField && (
                       <SelectWithApiQuery
                         label="whrfindus"
@@ -573,7 +575,6 @@ const BookingModal = ({
                     )}
                   </>
                 )}
-
                 {/* <InputField
                   name="patient_name_2_p"
                   label="scndnme"
@@ -610,7 +611,6 @@ const BookingModal = ({
               </>
             )}
           </Flex>
-
           {/* {showPatientDataForm && (
             <>
               <InputField
@@ -654,12 +654,11 @@ const BookingModal = ({
             </>
           )} */}
         </Flex>
-
         {!!previousReservations?.length && (
           <>
             <Text
               fontSize="ff7"
-              color={colors.appPrimary}
+              color={colors.alhokamaPrimary}
               margin={`${spacings.sp4} 0`}
             >
               bokngs
@@ -673,7 +672,6 @@ const BookingModal = ({
                   <BaseText tag="th">action</BaseText>
                 </tr>
               </thead>
-
               <tbody>
                 {previousReservations.map(
                   ({

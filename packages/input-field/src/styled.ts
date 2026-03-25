@@ -12,8 +12,15 @@ import {
 import { INPUT_FIELD_SIZES } from "./constants";
 import { BaseInputFieldProps, AddonAfterWrapperProps } from "./index.interface";
 
-const { appPrimary, black2, inputBorderColor, gray1, white, red, lightPink } =
-  colors;
+const {
+  alhokamaPrimary,
+  black2,
+  inputBorderColor,
+  gray1,
+  white,
+  red,
+  lightPink,
+} = colors;
 const { ff8: medium, ff7: large } = fontSizes;
 
 const redBorderCssHelper = css<BaseInputFieldProps>`
@@ -31,7 +38,7 @@ const focusCss = css<BaseInputFieldProps>`
     !disabled &&
     !useShadow &&
     `
-    border-color: ${appPrimary};
+    border-color: ${alhokamaPrimary};
     box-shadow: 0 0 0 2px rgb(24 144 255 / 20%);
   `};
   ${redBorderCssHelper};
@@ -110,7 +117,7 @@ export const inputCssHelper = css<BaseInputFieldProps>`
   line-height: 1;
   background-color: transparent;
   padding: 0px 5px;
-  caret-color: ${appPrimary};
+  caret-color: ${alhokamaPrimary};
   color: currentcolor;
   cursor: text;
   font-weight: ${({ fontWeight }) => fontWeight};

@@ -28,6 +28,18 @@ export const StyledHeader = styled.header<{ headerHeight: string }>`
   justify-content: space-between;
 `;
 
-export const StyledLogo = styled.img<{ headerLogoHeight: string }>`
-  height: ${({ headerLogoHeight }) => `${headerLogoHeight}px`};
+export const StyledLogo = styled.img<{
+  headerLogoHeight: number | string;
+  headerLogoWidth?: number | string;
+}>`
+  height: ${({ headerLogoHeight }) => headerLogoHeight};
+  width: ${({ headerLogoWidth }) => headerLogoWidth || "40px"};
+`;
+
+export const StyledLink = styled.a`
+  color: ${colors.alhokamaPrimary};
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
 `;

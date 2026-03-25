@@ -8,7 +8,7 @@ import Text from "@exsys-clinio/text";
 import { colors } from "@exsys-clinio/theme-values";
 import { BaseLabeledInputProps, LabelProps } from "./index.interface";
 
-const { inputLabelColor, gray1, white, appPrimary } = colors;
+const { inputLabelColor, gray1, white, alhokamaPrimary } = colors;
 
 export const LabelWrapperContainer = styled.div<BaseLabeledInputProps>`
   position: relative;
@@ -56,7 +56,7 @@ export const StyledLabel = styled(Text)<LabelProps>`
       `
       top: -3px;
       transform: translate(0, -3px);
-      color: ${appPrimary};
+      color: ${alhokamaPrimary};
       background-color: ${white};
       line-height: 0.9;
       ${righttoleft === "true" ? `right: 8px` : `left: 8px`};
